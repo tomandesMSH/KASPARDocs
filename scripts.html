@@ -27,6 +27,7 @@
     <a href="scripts.html#startads">StartAds.py</a>
     <a href="scripts.html#endtask">EndTask.py</a>
     <a href="scripts.html#localaccount">LocalAccount.py</a>
+    <a href="scripts.html#dropfileremove">DropFileRemove.py</a>
   </aside>
   <main>
     <br><br>
@@ -125,7 +126,7 @@ regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\Current
     winreg.DeleteValue(key, "TaskbarEndTask")
     winreg.CloseKey(key)</code></pre>
     <h3>Affected directories</h3>
-regedit:<pre><code>Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings</code></pre>
+regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings</code></pre>
     </section>
 </section>
 
@@ -148,6 +149,38 @@ regedit:<pre><code>Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\T
     </code></pre>
 </section>
 
+<section id="dropfileremove">
+  <h2>DropFileRemove.py</h2>
+  <span class="tag">python</span>
+  <span class="tag">explorer</span>
+  <span class="tag">files</span>
+
+  <p>
+    In a <strong>recent update</strong>, Microslop added a new option for "file sharing". If you drag your file a very intrusive and annoying pop-up window will appear asking you if you want to share it to other devices. this script will remove said pop-up.
+  </p>
+
+  <h3>Script</h3>
+  <pre><code>PATH = r"SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\14\3895955085"
+ #Applying
+    key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, PATH)
+    winreg.SetValueEx(key, "EnabledState", 0, winreg.REG_DWORD, 1)
+    winreg.SetValueEx(key, "EnabledStateOptions", 0, winreg.REG_DWORD, 0)
+    winreg.CloseKey(key)
+ #Reverting
+    key = winreg.OpenKey(
+      winreg.HKEY_LOCAL_MACHINE,
+      PATH,
+      0,
+      winreg.KEY_SET_VALUE)
+    winreg.DeleteValue(key, "EnabledState")
+    winreg.DeleteValue(key, "EnabledStateOptions")
+    winreg.CloseKey(key)
+</code></pre>
+
+  <h3>Affected directories</h3>
+  regedit:<pre><code>Computer\HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\14\3895955085</code></pre>
+
+</section>
 
     <footer>
       <a> Tomáš Vaněk 2026 - Kaspar </a>
