@@ -26,6 +26,7 @@
     <a href="scripts.html#rmenu">ClassicRClickMenu.py</a>
     <a href="scripts.html#startads">StartAds.py</a>
     <a href="scripts.html#endtask">EndTask.py</a>
+    <a href="scripts.html#localaccount">LocalAccount.py</a>
   </aside>
   <main>
     <br><br>
@@ -126,6 +127,28 @@ regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\Current
 regedit:<pre><code>Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings</code></pre>
     </section>
 </section>
+
+<section id="localaccount">
+  <h2>LocalAccount.py</h2>
+  <span class="tag">python</span>
+  <span class="tag">admin</span>
+  <span class="tag">windows</span>
+  <span class="tag">accounts/users</span>
+
+  <p>
+    A Python script to create a new local user account. <br> You can choose to make the user an administrator or a standard account.
+  </p>
+
+  <h3>Script</h3>
+  <pre><code> #Creating the account
+    subprocess.run(["net", "user", username, password, "/add"], check=True)
+    print(username + " account was created successfully.")
+ #Adding to Administrators (optional)
+    subprocess.run(["net", "localgroup", "Administrators", username, "/add"], check=True)
+    print("Adding " + username + " to the Administrators group")
+    print("User created as administrator.")</code></pre>
+</section>
+
 
     <footer>
       <a> Tomáš Vaněk 2026 - Kaspar </a>
