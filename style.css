@@ -1,0 +1,163 @@
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0f1115;
+  color: #e6e6e6;
+  display: flex;
+  min-height: 100vh;
+}
+
+aside {
+  width: 260px;
+  background: #151823;
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  border-right: 1px solid #222;
+}
+
+aside h1 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+aside a {
+  display: block;
+  color: #9aa4ff;
+  text-decoration: none;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+aside img {
+  margin: 8px 0;
+  max-width: 90%;
+  max-height: auto;
+  padding-bottom: 10px;
+}
+
+
+aside a:hover {
+  text-decoration: underline;
+}
+
+main {
+  flex: 1;
+  padding: 32px;
+}
+
+section {
+  max-width: 800px;
+  margin-bottom: 60px;
+}
+
+h2 {
+  border-bottom: 1px solid #222;
+  padding-bottom: 6px;
+}
+
+pre {
+  background: #0b0d12;
+  padding: 16px;
+  overflow-x: auto;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+code {
+  color: #cdd6ff;
+}
+
+.tag {
+  display: inline-block;
+  background: #22275a;
+  color: #cfd3ff;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-right: 6px;
+}
+
+footer {
+  margin-top: 60px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+
+
+.introtxt {
+  font-size: 25px;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 100px;             /* space between buttons */
+  margin-top: 30px;      /* spacing from paragraph above */
+  flex-wrap: wrap;       /* wrap buttons on small screens */
+  justify-content: center;
+}
+
+.doc-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;                  /* space between image and text */
+  background-color: #22275a;  /* matches .tag color */
+  color: #cfd3ff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;           /* less padding → thinner buttons */
+  font-size: 13px;             /* slightly smaller text */
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.doc-btn img {
+  max-width: 20px;             /* slightly smaller icon */
+  height: auto;
+}
+
+.doc-btn:hover {
+  background-color: #3a3f7c;  /* slightly lighter on hover */
+}
+
+
+.top-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #151823;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #222;
+  z-index: 1000;
+}
+
+.top-navbar img {
+  max-height: 40px;
+}
+
+.nav-title {
+  color: #cfd3ff;
+  font-size: 18px;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.nav-right a {
+  color: #9aa4ff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.nav-right a:hover {
+  text-decoration: underline;
+}

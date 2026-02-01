@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Script Collection Docs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="top-navbar">
+    <div class="nav-left">
+      <a href="index.html"><img src="files/kasparlogo.png" alt="Logo"></a>
+    </div>
+    <nav class="nav-right">
+      <a href="index.html">Home</a>
+      <a href="scripts.html">Scripts</a>
+      <a href="https://github.com/tomandesMSH">GitHub</a>
+      <a href="bug.html">Report a bug</a>
+    </nav>
+  </header>
+
+  <aside>
+    <br><br>
+    <a href="scripts.html"> <h1>📁 Scripts</h1> </a>
+    <a href="scripts.html#rexplorer">rexplorer.bat</a>
+    <a href="scripts.html#rmenu">ClassicRClickMenu.py</a>
+    <a href="scripts.html#startads">StartAds.py</a>
+  </aside>
+  <main>
+    <br><br>
+    <section id="rexplorer">
+      <h2>rexplorer.bat</h2>
+      <span class="tag">essential</span>
+      <span class="tag">explorer</span>
+      <span class="tag">batch</span>
+      
+      <p>
+        A batch file that restarts explorer.exe, because sometimes restarting explorer is necessary to apply tweaks.
+      </p>
+
+      <h3>Script</h3>
+      <pre><code>taskkill /im explorer.exe /f
+start explorer.exe
+exit</code></pre>
+    </section>
+
+    <section id="rmenu">
+      <h2>ClassicRClickMenu.py</h2>
+      <span class="tag">python</span>
+      <span class="tag">microslop</span>
+      <span class="tag">windows11</span>
+
+      <p>
+        Brings back the normal and usable Windows 10 context menu.
+      </p>
+
+      <h3>Script</h3>
+      <pre><code> #Applying Windows 10 context menu
+    key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+    winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "")
+    winreg.CloseKey(key)
+    print("Restarting Explorer to apply changes...")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    bat_file = os.path.join(script_dir, "rexplorer.bat")
+    subprocess.call(bat_file)
+
+ #Reverting back to Windows 11 context menu.
+    try:
+        print("Reverting to default Windows 11 right-click menu.")
+        winreg.DeleteKey(winreg.HKEY_CURRENT_USER, path)
+        winreg.DeleteKey(winreg.HKEY_CURRENT_USER,r"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}")
+    except FileNotFoundError:
+        print("Error. Windows 11 menu is already set.")
+</code></pre>
+
+<h3>Affected directories</h3>
+regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32</code></pre>
+    </section>
+
+    <section id="startads">
+      <h2>StartAds.py</h2>
+      <span class="tag">start-menu</span>
+      <span class="tag">ads</span>
+
+      <p>
+        Removes advertisements in the start menu.
+      </p>
+
+      <h3>Script</h3>
+      <pre><code> #Path
+    key_path = r"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
+    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, key_path, 0, winreg.KEY_SET_VALUE)
+ #Removing start ads
+    winreg.SetValueEx(key, "SystemPaneSuggestionsEnabled", 0, winreg.REG_DWORD, 0)
+ #Reverting the tweak (bringing ads back)
+    winreg.SetValueEx(key, "SystemPaneSuggestionsEnabled", 0, winreg.REG_DWORD, 1)
+  </code></pre>
+
+  <h3>Affected directories</h3>
+regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager</code></pre>
+    </section>
+
+    <footer>
+      <a> Tomáš Vaněk 2026 - Kaspar </a>
+    </footer>
+
+  </main>
+
+</body>
+</html>
