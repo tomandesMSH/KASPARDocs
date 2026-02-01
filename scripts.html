@@ -142,11 +142,9 @@ regedit:<pre><code>Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\T
   <h3>Script</h3>
   <pre><code> #Creating the account
     subprocess.run(["net", "user", username, password, "/add"], check=True)
-    print(username + " account was created successfully.")
  #Adding to Administrators (optional)
     subprocess.run(["net", "localgroup", "Administrators", username, "/add"], check=True)
-    print("Adding " + username + " to the Administrators group")
-    print("User created as administrator.")</code></pre>
+    </code></pre>
 </section>
 
 
