@@ -25,6 +25,7 @@
     <a href="scripts.html#rexplorer">rexplorer.bat</a>
     <a href="scripts.html#rmenu">ClassicRClickMenu.py</a>
     <a href="scripts.html#startads">StartAds.py</a>
+    <a href="scripts.html#endtask">StartAds.py</a>
   </aside>
   <main>
     <br><br>
@@ -99,6 +100,32 @@ regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-3
   <h3>Affected directories</h3>
 regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager</code></pre>
     </section>
+
+    <section id="endtask">
+  <h2>TaskbarEndTask.py</h2>
+  <span class="tag">python</span>
+  <span class="tag">taskbar</span>
+  <span class="tag">windows11</span>
+
+  <p>
+    Enables the End Task option when right-clicking an app on the Windows 11 taskbar.<br>  
+    The script works by toggling an undocumented registry flag used internally
+    by Windows Explorer. </p>
+
+  <h3>Script</h3>
+  <pre><code>PATH = r"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"
+ #Applying
+    key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, PATH)
+    winreg.SetValueEx(key, "TaskbarEndTask", 0, winreg.REG_DWORD, 1)
+    winreg.CloseKey(key)
+ #Reverting
+    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, PATH, 0, winreg.KEY_SET_VALUE)
+    winreg.DeleteValue(key, "TaskbarEndTask")
+    winreg.CloseKey(key)</code></pre>
+    <h3>Affected directories</h3>
+regedit:<pre><code>Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings</code></pre>
+    </section>
+</section>
 
     <footer>
       <a> Tomáš Vaněk 2026 - Kaspar </a>
