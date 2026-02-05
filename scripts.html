@@ -28,6 +28,7 @@
     <a href="scripts.html#endtask">EndTask.py</a>
     <a href="scripts.html#localaccount">LocalAccount.py</a>
     <a href="scripts.html#dropfileremove">DropFileRemove.py</a>
+    <a href="scripts.html#powerplan">PowerPlan.py</a>
   </aside>
   <main>
     <br><br>
@@ -180,6 +181,44 @@ regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\Current
   <h3>Affected directories</h3>
   regedit:<pre><code>Computer\HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\14\3895955085</code></pre>
 
+</section>
+
+<section id="powerplan">
+  <h2>PowerPlan.py</h2>
+  <span class="tag">python</span>
+  <span class="tag">powercfg</span>
+  <span class="tag">windows</span>
+  <span class="tag">power-plan</span>
+
+  <p>
+    a Windows power plan manager.<br>
+    You can create a custom power plan based on existing presets, some of which are normally not accessible to regular users.
+  </p>
+
+  <h3>Power Plans presets:</h3>
+      <ul>
+        <li>Power Saving</li>
+        <li>Balanced</li>
+        <li>High Performance</li>
+        <li>Ultimate Performance</li>
+      </ul>
+
+  <h3>Script</h3>
+  <pre><code>os.system("powercfg -duplicatescheme " + base_plan)
+output = os.popen("powercfg -list").read().splitlines()
+  new = ""
+  for line in output:
+      if base_name in line:
+          new = line.split(":")[1].split("(")[0].strip()
+
+  if new != "":
+      os.system('powercfg -changename ' + new + ' "' + name + '"')
+      os.system("powercfg -setactive " + new)</code></pre>
+
+  <h3>Affected directories</h3>
+  <p>
+    The script does not use the Windows registry, instead it uses <code>powercfg</code> (a command-line tool).
+  </p>
 </section>
 
     <footer>
