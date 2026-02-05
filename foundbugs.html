@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Windows Bugs</title>
+  <link rel="icon" type="image/x-icon" href="files/kaspardocs.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-navbar">
+    <div class="nav-left">
+      <a href="index.html"><img src="files/kasparlogo.png" alt="Logo"></a>
+    </div>
+    <nav class="nav-right">
+      <a href="index.html">Home</a>
+      <a href="scripts.html">Scripts</a>
+      <a href="foundbugs.html">Windows Bugs</a>
+      <a href="https://github.com/tomandesMSH">GitHub</a>
+      <a href="bug.html">Report a bug</a>
+    </nav>
+  </header>
+
+  <aside>
+    <br><br>
+    <a href="scripts.html"> <h1>📁 Scripts</h1> </a>
+    <a href="scripts.html#rexplorer">rexplorer.bat</a>
+    <a href="scripts.html#rmenu">ClassicRClickMenu.py</a>
+    <a href="scripts.html#startads">StartAds.py</a>
+    <a href="scripts.html#endtask">EndTask.py</a>
+    <a href="scripts.html#localaccount">LocalAccount.py</a>
+    <a href="scripts.html#dropfileremove">DropFileRemove.py</a>
+    <a href="scripts.html#powerplan">PowerPlan.py</a>
+    <br><br>
+    <a href="foundbugs.html"><h1>📰 Windows Bugs</h1></a>
+    <a href="foundbugs.html#filepicker">Windows Filepicker</a>
+  </aside>
+
+  <main>
+    <br><br>
+    <section id="intro">
+      <h1>Windows Bug report</h1>
+      <p>
+        This page tracks <strong>Windows bugs, glitches, and unexpected behavior</strong>.<br> 
+        Stay updated on recent issues, how they affect users, and any known <strong>solutions</strong>
+      </p>
+      <hr>
+    </section>
+
+      <h2>Recent Windows Bugs</h2>
+
+
+      <section id="filepicker">
+        <h3>Broken FilePicker</h3>
+      <span class="tag">explorer</span>
+      <span class="tag">files</span>
+      <span class="tag">affecting other apps</span>
+        <p><strong>Windows Version:</strong> Win11 25H2 </p>
+        <p> File Explorers built in function "filepicker" (aka MSVCP140.dll) was updated, making older software unusable.</p>
+        <p>Some programs might struggle, render the file as not existing or the program crashes straight upon opening the dialog. This bug is present in a lot of programs (ex. Wondershare Filmora - Editing software) </p>
+        <p>DISM or sfc doesnt fix this since <i>technically</i> it is the programs fault</p>
+        <p><strong>Solution:</strong><br> Copy <code>msvcp140.dll</code> from <code>C:\Windows\System32\</code> into the programs folder and replace it if possible.<br>If the program is closed entirely or "one-file", report it to the developers, or good luck reverse engineering it.</p>
+        <p>If the file picker is broken globally, you can download a working version here, but I recommend using a copy from your own system.</p> <a href="https://github.com/tomandesMSH/KASPAR/raw/main/files/msvcp140.dll"> <button class="doc-btn"> Download </button>  </a>
+      </section>
+
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDoQIjxXp5lpwreJ5loZWz0dwhOXq7nxl15PiKgIrlE75owg/viewform?usp=header"><button class="doc-btn"> Report a new bug </button></a>
+
+    <footer>
+      <a> Tomáš Vaněk 2026 - Kaspar </a>
+    </footer>
+  </main>
+</body>
+</html>
