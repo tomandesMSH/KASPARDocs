@@ -30,6 +30,7 @@
     <a href="scripts.html#localaccount">LocalAccount.py</a>
     <a href="scripts.html#dropfileremove">DropFileRemove.py</a>
     <a href="scripts.html#powerplan">PowerPlan.py</a>
+    <a href="scripts.html#devicesetupregion">DeviceSetupRegion.py</a>
     <br><br>
     <a href="foundbugs.html"><h1>📰 Windows Bugs</h1></a>
     <a href="foundbugs.html#filepicker">Windows Filepicker</a>
@@ -223,6 +224,37 @@ output = os.popen("powercfg -list").read().splitlines()
   <p>
     The script does not use the Windows registry, instead it uses <code>powercfg</code> (a command-line tool).
   </p>
+</section>
+
+<section id="devicesetupregion">
+  <h2>DeviceSetupRegion.py</h2>
+  <span class="tag">python</span>
+  <span class="tag">region</span>
+  <span class="tag">restrictions</span>
+
+  <p>
+    <strong>DeviceSetupRegion.py</strong> changes the Windows device setup region and current location.
+    Because Windows blocks certain features (ex. Disabling Bing search in the start menu) in certain coutries, and usually checks the "Device Setup Region" value, which you cannot change, instead of the current location. All restrictions are documented in: <code>C:\Windows\System32\IntegratedServicesRegionPolicySet.json</code>
+  </p>
+
+  <pre><code>key = winreg.OpenKey(
+winreg.HKEY_CURRENT_USER,
+r"Control Panel\International\Geo",
+0,
+winreg.KEY_SET_VALUE)
+winreg.SetValueEx(key, "Name", 0, winreg.REG_SZ, abbrev)
+winreg.SetValueEx(key, "Nation", 0, winreg.REG_SZ, str(nation_id))winreg.CloseKey(key)
+winreg.DeleteValue(key2, "DeviceRegion")
+winreg.CloseKey(key2)
+key2 = winreg.OpenKey(
+winreg.HKEY_LOCAL_MACHINE,
+r"SOFTWARE\Microsoft\Windows\CurrentVersion\Control Panel\DeviceRegion",
+0,
+winreg.KEY_SET_VALUE)  </code></pre>
+
+  <h3>Affected directories</h3>
+  regedit:<pre><code>Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Control Panel\DeviceRegion
+Computer\HKEY_CURRENT_USER\Control Panel\International\Geo</code></pre>
 </section>
 
     <footer>
