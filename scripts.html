@@ -32,6 +32,7 @@
     <a href="scripts.html#powerplan">PowerPlan.py</a>
     <a href="scripts.html#devicesetupregion">DeviceSetupRegion.py</a>
     <a href="scripts.html#disableadvertisementid">DisableAdvertisementID.py</a>
+    <a href="scripts.html#detailedshutdown">DetailedShutdown.py</a>
     <br><br>
     <a href="foundbugs.html"><h1>📰 Windows Bugs</h1></a>
     <a href="foundbugs.html#filepicker">Windows Filepicker</a>
@@ -258,7 +259,11 @@ Computer\HKEY_CURRENT_USER\Control Panel\International\Geo</code></pre>
 
 <section id ="disableadvertisementid">
   <h2>DisableAdvertisementID.py</h2>
-  <p>Disables Advertisement ID settings scattered throughout the privacy options.<br> Reduces most telemetry and data collection.</p>
+  <span class="tag">python</span>
+  <span class="tag">privacy</span>
+  <span class="tag">ads</span>
+  <span class="tag">data-collection/telemetry</span>
+  <p>Disables most <strong>Advertisement ID</strong> settings scattered throughout the privacy options.<br> Reduces most telemetry and data collection.</p>
     <h3>Script</h3>
   <pre><code>path = r"Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo"
 path = r"Software\Microsoft\Windows\CurrentVersion\Privacy"
@@ -313,7 +318,35 @@ path = r"Software\Policies\Microsoft\Windows\DataCollection"
       winreg.CloseKey(key)
   </code></pre>
 
+  <h3>Affected directories</h3>
+  regedit:<pre><code>
+  Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo
+  Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Privacy
+  Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+  Computer\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\DataCollection
+</code></pre>
+</section>
 
+<section id="detailedshutdown">
+<h2> DetailedShutdown.py </h2>
+  <span class="tag">python</span>
+  <span class="tag">verbose</span>
+  <span class="tag">diagnostics</span>
+  <span class="tag">details</span>
+<p> When shutting down your computer, Windows normally shows “Shutting down” without any details. <br> By enabling this tweak, you can see detailed information about what the system is actually doing during the shutdown process, including any processes or tasks that might be preventing the shutdown. </p>
+<pre><code>path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
+ #Applying
+    key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path)
+    winreg.SetValueEx(key, "VerboseStatus", 0, winreg.REG_DWORD, 1)
+    winreg.CloseKey(key)
+ #Reverting
+    winreg.DeleteValue(key, "VerboseStatus")
+</code></pre>
+
+<h3>Affected directories</h3>
+regedit:<pre><code>
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+</code></pre>
 
 
 </section>
