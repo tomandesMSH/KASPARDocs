@@ -31,6 +31,7 @@
     <a href="scripts.html#dropfileremove">DropFileRemove.py</a>
     <a href="scripts.html#powerplan">PowerPlan.py</a>
     <a href="scripts.html#devicesetupregion">DeviceSetupRegion.py</a>
+    <a href="scripts.html#disableadvertisementid">DisableAdvertisementID.py</a>
     <br><br>
     <a href="foundbugs.html"><h1>📰 Windows Bugs</h1></a>
     <a href="foundbugs.html#filepicker">Windows Filepicker</a>
@@ -68,18 +69,16 @@ exit</code></pre>
     key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
     winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "")
     winreg.CloseKey(key)
-    print("Restarting Explorer to apply changes...")
     script_dir = os.path.dirname(os.path.abspath(__file__))
     bat_file = os.path.join(script_dir, "rexplorer.bat")
     subprocess.call(bat_file)
 
  #Reverting back to Windows 11 context menu.
     try:
-        print("Reverting to default Windows 11 right-click menu.")
         winreg.DeleteKey(winreg.HKEY_CURRENT_USER, path)
         winreg.DeleteKey(winreg.HKEY_CURRENT_USER,r"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}")
     except FileNotFoundError:
-        print("Error. Windows 11 menu is already set.")
+        (Errormessage)
 </code></pre>
 
 <h3>Affected directories</h3>
@@ -236,7 +235,7 @@ output = os.popen("powercfg -list").read().splitlines()
     <strong>DeviceSetupRegion.py</strong> changes the Windows device setup region and current location.
     Because Windows blocks certain features (ex. Disabling Bing search in the start menu) in certain coutries, and usually checks the "Device Setup Region" value, which you cannot change, instead of the current location. All restrictions are documented in: <code>C:\Windows\System32\IntegratedServicesRegionPolicySet.json</code>
   </p>
-
+  <h3>Script</h3>
   <pre><code>key = winreg.OpenKey(
 winreg.HKEY_CURRENT_USER,
 r"Control Panel\International\Geo",
@@ -257,11 +256,77 @@ winreg.KEY_SET_VALUE)  </code></pre>
 Computer\HKEY_CURRENT_USER\Control Panel\International\Geo</code></pre>
 </section>
 
+<section id ="disableadvertisementid">
+  <h2>DisableAdvertisementID.py</h2>
+  <p>Disables Advertisement ID settings scattered throughout the privacy options.<br> Reduces most telemetry and data collection.</p>
+    <h3>Script</h3>
+  <pre><code>path = r"Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo"
+path = r"Software\Microsoft\Windows\CurrentVersion\Privacy"
+path = r"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
+path = r"Software\Policies\Microsoft\Windows\DataCollection"
+
+ #Apply
+    # Ad ID
+      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+      winreg.SetValueEx(key, "Enabled", 0, winreg.REG_DWORD, 0)
+      winreg.CloseKey(key)
+        
+    # Tailored Experiences (formerly Personalized Offers)
+      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+      winreg.SetValueEx(key, "TailoredExperiencesWithDiagnosticDataEnabled", 0, winreg.REG_DWORD, 0)
+      winreg.CloseKey(key)
+
+    # Ad personalization  
+      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+      winreg.SetValueEx(key, "SubscribedContent-338393Enabled", 0, winreg.REG_DWORD, 0)
+      winreg.SetValueEx(key, "SubscribedContent-353694Enabled", 0, winreg.REG_DWORD, 0)
+      winreg.CloseKey(key)
+
+    # Telemetry
+      key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path)
+      winreg.SetValueEx(key, "AllowTelemetry", 0, winreg.REG_DWORD, 0)
+      winreg.CloseKey(key)
+
+ #Reverting
+    # Ad ID
+      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+      winreg.SetValueEx(key, "Enabled", 1, winreg.REG_DWORD, 1)
+      winreg.CloseKey(key)
+      
+    # Tailored Experiences
+      path = r"Software\Microsoft\Windows\CurrentVersion\Privacy"
+      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+      winreg.SetValueEx(key, "TailoredExperiencesWithDiagnosticDataEnabled", 1, winreg.REG_DWORD, 1)
+      winreg.CloseKey(key)
+
+    # Ad personalization
+      path = r"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
+      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+      winreg.SetValueEx(key, "SubscribedContent-338393Enabled", 1, winreg.REG_DWORD, 1)
+      winreg.SetValueEx(key, "SubscribedContent-353694Enabled", 1, winreg.REG_DWORD, 1)
+      winreg.CloseKey(key)
+    
+      # Telemetry
+      path = r"Software\Policies\Microsoft\Windows\DataCollection"
+      key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path)
+      winreg.SetValueEx(key, "AllowTelemetry", 3, winreg.REG_DWORD, 3)
+      winreg.CloseKey(key)
+  </code></pre>
+
+
+
+
+</section>
+
+
     <footer>
       <a> Tomáš Vaněk 2026 - Kaspar </a>
     </footer>
 
   </main>
+
+
+
 
 </body>
 </html>
