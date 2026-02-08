@@ -1,5 +1,5 @@
 # KASPAR Documentation
-![Static Badge](https://img.shields.io/badge/KASPAR-white?style=for-the-badge&logo=buddy&link=https%3A%2F%2Fgithub.com%2FtomandesMSH%2FKASPAR)
+![Static Badge](https://img.shields.io/badge/KASPAR-007EC6?style=for-the-badge&logo=buddy&logoColor=white&link=https%3A%2F%2Fgithub.com%2FtomandesMSH%2FKASPAR)
 
 ![Logo](https://github.com/tomandesMSH/KASPARDocs/blob/main/files/kasparlogo.png?raw=true)
 
