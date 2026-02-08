@@ -1,6 +1,6 @@
 # KASPAR Documentation
-![KASPAR](https://img.shields.io/badge/KASPAR-%E2%80%93?style=for-the-badge&logo=buddy&colorA=transparent&colorB=000000)
+![Static Badge](https://img.shields.io/badge/KASPAR-white?style=for-the-badge&logo=buddy&link=https%3A%2F%2Fgithub.com%2FtomandesMSH%2FKASPAR)
 
 ![Logo](https://github.com/tomandesMSH/KASPARDocs/blob/main/files/kasparlogo.png?raw=true)
 
-Official documentation site for [KASPAR](https://github.com/tomandesMSH/KASPAR) - a Windows utility for advanced system tweaks.
+Official documentation site for [KASPAR](https://github.com/tomandesMSH/KASPAR) - a Windows utility for advanced system tweaks. 
