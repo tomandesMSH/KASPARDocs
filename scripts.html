@@ -34,6 +34,7 @@
     <a href="scripts.html#disableadvertisementid">DisableAdvertisementID.py</a>
     <a href="scripts.html#detailedshutdown">DetailedShutdown.py</a>
     <a href="scripts.html#localsearch">LocalSearch.py</a>
+    <a href="scripts.html#godmode">ControlPanelGodMode.bat</a>
     <br><br>
     <a href="foundbugs.html"><h1>📰 Windows Bugs</h1></a>
     <a href="foundbugs.html#filepicker">Windows Filepicker</a>
@@ -376,8 +377,21 @@ Computer\HKEY_CURRENT_USER\Software\Policies\Microsoft\Explorer
 </code></pre>
 </section>
 
-
+<section id="godmode">
+<h2>ControlPanelGodMode.bat</h2>
+<span class="tag">batch, ps</span>
+<span class="tag">hidden</span>
+<span class="tag">access</span>
+<p>Windows "GodMode” is a hidden feature in Windows that creates a folder which exposes all control panel options and other administrative tools in one place. Windows settings are usually spread across different menus and apps, GodMode sorts them into a single list.</p>
+<h3>Script</h3>
+<pre><code>for /f "tokens=2*" %%A in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop') do set desktop=%%B
+call set desktop=%desktop%
+powershell -Command "New-Item -Path '%desktop%\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}' -ItemType Directory -Force"
+</code></pre>
+<h3>Affected directories</h3>
+<code>%USERPROFILE%/Desktop aka. C:/Users/YOURNAME/Desktop</code>
 </section>
+
 
     <footer>
       <a> Tomáš Vaněk 2026 - Kaspar </a>
