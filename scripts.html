@@ -334,6 +334,7 @@ path = r"Software\Policies\Microsoft\Windows\DataCollection"
   <span class="tag">diagnostics</span>
   <span class="tag">details</span>
 <p> When shutting down your computer, Windows normally shows “Shutting down” without any details. <br> By enabling this tweak, you can see detailed information about what the system is actually doing during the shutdown process, including any processes or tasks that might be preventing the shutdown. </p>
+<h3>Script</h3>
 <pre><code>path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
  #Applying
     key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path)
@@ -347,10 +348,31 @@ path = r"Software\Policies\Microsoft\Windows\DataCollection"
 regedit:<pre><code>
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
 </code></pre>
+</section>
+
+<section id="localsearch"> 
+<h2>LocalSearch.py</h2>
+<p>Prevents Windows Search from showing online results. Most of the time, when using the Start menu, you are searching for something <strong>on your PC</strong>. Without this tweak, muscle memory and pressing enter without double checking after a search causes Microsoft Bing to open with search results for what you typed, instead of launching the app you actually wanted.. for some reason, Microsoft prioritizes Bing over local search.<br> This tweak disables online search entirely.</p>
+<h3>Script</h3>
+<pre><code>
+path = r"Software\Policies\Microsoft\Explorer"
+ #Applying
+    key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+    winreg.SetValueEx(key, "DisableSearchBoxSuggestions", 0, winreg.REG_DWORD, 1)
+    winreg.CloseKey(key)
+ #Reverting
+    winreg.DeleteValue(key, "DisableSearchBoxSuggestions")
+
+</code></pre>
+
+<h3>Affected directories</h3>
+regedit:<pre><code>
+Computer\HKEY_CURRENT_USER\Software\Policies\Microsoft\Explorer
+</code></pre>
+</section>
 
 
 </section>
-
 
     <footer>
       <a> Tomáš Vaněk 2026 - Kaspar </a>
