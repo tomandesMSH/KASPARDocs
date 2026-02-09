@@ -161,3 +161,14 @@ footer {
 .nav-right a:hover {
   text-decoration: underline;
 }
+.example {
+  border-radius: 2%;
+  max-width: 90%;
+  transition: transform 0.3s ease;
+}
+
+.example:hover {
+  transform: scale(1.05);
+}
+
+

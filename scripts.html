@@ -35,6 +35,8 @@
     <a href="scripts.html#detailedshutdown">DetailedShutdown.py</a>
     <a href="scripts.html#localsearch">LocalSearch.py</a>
     <a href="scripts.html#godmode">ControlPanelGodMode.bat</a>
+    <a href="scripts.html#restorepoint">RestorePoint.py</a>
+    <a href="scripts.html#disabledynamicsearch">DisableDynamicSearch.py</a>
     <br><br>
     <a href="foundbugs.html"><h1>📰 Windows Bugs</h1></a>
     <a href="foundbugs.html#filepicker">Windows Filepicker</a>
@@ -359,6 +361,8 @@ Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\S
 <span class="tag">start-menu</span>
 
 <p>Prevents Windows Search from showing online results. Most of the time, when using the Start menu, you are searching for something <strong>on your PC</strong>. Without this tweak, muscle memory and pressing enter without double checking after a search causes Microsoft Bing to open with search results for what you typed, instead of launching the app you actually wanted.. for some reason, Microsoft prioritizes Bing over local search.<br> This tweak disables online search entirely.</p>
+<h3>Example:</h3> <h4>before:</h4>
+<img class="example" src="files/localsearchyes.png"> <h4>after:</h4> <img class="example" src="files/localsearchno.png">
 <h3>Script</h3>
 <pre><code>
 path = r"Software\Policies\Microsoft\Explorer"
@@ -383,6 +387,8 @@ Computer\HKEY_CURRENT_USER\Software\Policies\Microsoft\Explorer
 <span class="tag">hidden</span>
 <span class="tag">access</span>
 <p>Windows "GodMode” is a hidden feature in Windows that creates a folder which exposes all control panel options and other administrative tools in one place. Windows settings are usually spread across different menus and apps, GodMode sorts them into a single list.</p>
+<h3>Preview:</h3>
+<img class="example" src="files/godmode.png">
 <h3>Script</h3>
 <pre><code>for /f "tokens=2*" %%A in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop') do set desktop=%%B
 call set desktop=%desktop%
@@ -392,6 +398,52 @@ powershell -Command "New-Item -Path '%desktop%\GodMode.{ED7BA470-8E54-465E-825C-
 <code>%USERPROFILE%/Desktop aka. C:/Users/YOURNAME/Desktop</code>
 </section>
 
+<section id="restorepoint">
+<h2>RestorePoint.py</h2>
+<span class="tag">python</span>
+<span class="tag">powershell</span>
+<span class="tag">safeguard</span>
+<span class="tag">protection</span>
+<p>A restore point in Windows is basically like a checkpoint in a game. It saves your important system files, programs, drivers, and registry settings. If something goes terribly wrong, restore points let you travel in time and roll your computer back to a previous, working state. This is basically the "oh i f*cked up" button. Honestly, even one of my scripts could potentially crash your system, keep that in mind.. <i>not my fault tho, Microsoft has a new hobby of changing perfectly working apps so they might move some directory and everything goes crashing down.</i></p>
+<h3>Script</h3>
+<h4>Python</h4>
+<pre><code> #Calling PowerShell as admin to create a new restore point
+    script_dir = Path(__file__).resolve().parent
+    powershell_script = script_dir / "restorepointhelper.ps1"
+
+    subprocess.run([
+        "powershell",
+        "-ExecutionPolicy", "Bypass",
+        "-File", str(powershell_script)
+
+ # Removing all restore points
+    command = ["vssadmin", "delete", "shadows", "/for=c:", "/all", "/quiet"]
+    subprocess.run(command, check=True)
+</code></pre>
+<h4>PowerShell</h4>
+<pre><code> #Creating a new restore point
+    Checkpoint-Computer -Description "KASPAR Restore Point" -RestorePointType "MODIFY_SETTINGS" </code></pre>
+<h3>Affected directories</h3>
+<pre><code>C:/System Volume Information</code></pre>
+</section>
+
+<section id="disabledynamicsearch">
+<p> Dynamic Search is basically, again, transforming the Windows Search Bar into something that isnt searching on Windows.. Shows you news you did not ask for, what "Day" it is, which is cool and all, but not in my search bar.</p>
+<h3>Example:</h3>
+<h4>before:</h4>
+<img class="example" src="files/dynamicsearch.png"> <h4>after:</h4> <img class="example" src="files/nodynamicsearch.png">
+<h3>Script</h3>
+<pre><code>#PATH "Software\Microsoft\Windows\CurrentVersion\SearchSettings"
+  reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_SET_VALUE)
+#Applying
+  winreg.SetValueEx(reg_key, value_name, 0, winreg.REG_DWORD, 0)
+#Reverting
+  winreg.SetValueEx(reg_key, value_name, 0, winreg.REG_DWORD, 1)
+</code></pre>
+<h3>Affected directories</h3>
+<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings</code></pre>
+
+</section>
 
     <footer>
       <a> Tomáš Vaněk 2026 - Kaspar </a>
