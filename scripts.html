@@ -38,6 +38,7 @@
     <a href="scripts.html#restorepoint">RestorePoint.py</a>
     <a href="scripts.html#disabledynamicsearch">DisableDynamicSearch.py</a>
     <a href="scripts.html#shutdownanddontupdate">ShutdownAndDontUpdate.py</a>
+    <a href="scripts.html#kasparnro">LocalAccountDuringInstallation</a>
     <br><br>
     <a href="foundbugs.html"><h1>📰 Windows Bugs</h1></a>
     <a href="foundbugs.html#filepicker">Windows Filepicker</a>
@@ -471,6 +472,54 @@ regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\Current
 <h3>Affected directories</h3>
 regedit:<pre><code>Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator</code></pre>
 </section>
+
+<section id="kasparnro">
+  <h2>LocalAccountDuringInstallation / KasparNRO</h2>
+  <span class="tag">python</span>
+  <span class="tag">windows</span>
+  <span class="tag">oobe</span>
+  <span class="tag">local-account</span>
+
+  <h3>About</h3>
+  <p>
+    This script allows you to install Windows <strong>without needing an internet connection</strong>.<br>
+    Made with love to make the installation process faster and less painful.<br>
+    It creates a <strong>local account</strong> during setup for you.<br><br>
+    Your name will be set to KASPAR.
+  </p>
+
+  <h3>How to use</h3>
+  <p>
+    Go through the installation process normally.<br>
+    Right when you get to this step (OOBE):
+  </p>
+  <img class="example" src="https://camo.githubusercontent.com/32214d8169dc808bddb3a4a5c87b7ff2e7ee3777cf53ca77cacb92609c1e4c67/68747470733a2f2f7777772e707567657473797374656d732e636f6d2f7069635f646973702e7068703f69643d3730383031" alt="Choose Country or Region menu">
+  <p>
+    Press <strong>Shift+F10</strong> on your keyboard. A Command Prompt window will popup.<br>
+    Type in:  <code>curl -L tinyurl.com/kasparnro -o local.cmd</code> and confirm with <strong>Enter</strong>.<br>
+    A download process will begin. After it finishes (usually a second or two), type <code>local.cmd</code>.<br>
+    Your computer will automatically restart. Once Windows boots up again, answer the region questions.<br>
+    The local account will already be created for you.
+  </p>
+
+  <h3>Changing the Local Account Name</h3>
+  <p>After installation, you can change the local account’s display name:</p>
+  <ol>
+    <li>Press <strong>Win + R</strong></li>
+    <li>Type: <code>netplwiz</code></li>
+    <li>Select your local account → <strong>Properties</strong> → rename it</li>
+  </ol>
+
+  <h3>How this works:</h3>
+  <ol>
+    <li><strong>CURL</strong> = transfers/<strong>downloads data</strong> from a server, where the script is hosted (GitHub, shortened via TinyURL).</li>
+    <li><strong>-L</strong> is a flag that tells CURL to follow <strong>redirects</strong>, which is needed because TinyURL redirects to raw.githubusercontent.com.</li>
+    <li><code>tinyurl.com/kasparnro</code> -> <code>https://raw.githubusercontent.com/tomandesMSH/KASPAR/main/scripts/LocalAccountDuringInstallation/script.cmd</code><br>(NRO/BypassNRO was a command that did the same, but Microsoft abandoned it in March 2025.)</li>
+    <li><strong>-o local.cmd</strong> tells CURL to save the downloaded file as "local.cmd". You can change the name if you want.</li>
+    <li><code>local.cmd</code> runs the cmd file you just downloaded.</li>
+  </ol>
+</section>
+
     <footer>
       <a> Tomáš Vaněk 2026 - Kaspar </a>
     </footer>
