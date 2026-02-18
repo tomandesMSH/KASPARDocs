@@ -37,6 +37,7 @@
     <a href="scripts.html#godmode">ControlPanelGodMode.bat</a>
     <a href="scripts.html#restorepoint">RestorePoint.py</a>
     <a href="scripts.html#disabledynamicsearch">DisableDynamicSearch.py</a>
+    <a href="scripts.html#shutdownanddontupdate">ShutdownAndDontUpdate.py</a>
     <br><br>
     <a href="foundbugs.html"><h1>📰 Windows Bugs</h1></a>
     <a href="foundbugs.html#filepicker">Windows Filepicker</a>
@@ -137,7 +138,6 @@ regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\Current
     winreg.CloseKey(key)</code></pre>
     <h3>Affected directories</h3>
 regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings</code></pre>
-    </section>
 </section>
 
 <section id="localaccount">
@@ -441,10 +441,36 @@ powershell -Command "New-Item -Path '%desktop%\GodMode.{ED7BA470-8E54-465E-825C-
   winreg.SetValueEx(reg_key, value_name, 0, winreg.REG_DWORD, 1)
 </code></pre>
 <h3>Affected directories</h3>
-<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings</code></pre>
+regedit:<pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings</code></pre>
 
 </section>
 
+<section id="shutdownanddontupdate">
+<h2>ShutdownAndDontUpdate.py</h2>
+<span class="tag">python</span>
+<span class="tag">windows-update</span>
+<span class="tag">forced-updates</span>
+<p> Brings back the "Shutdown and Restart" options in the start menu, even if theres an update pending. Also allows you to disable the update option entirely.</p>
+<h3>Example:</h3>
+<h4>Forced update (original behavior)</h4><img class="example" src="files/shutdownflyout-a.png">
+<h4>Both options (Recommended)</h4> <img class="example" src="files/shutdownflyout-f.png">
+<h4>No update options</h4><img class="example" src="files/shutdownflyout-0.png">
+<h3>Script</h3>
+<pre><code> #PATH "SOFTWARE\Microsoft\WindowsUpdate\Orchestrator"
+  #Shutdown, Restart + Update & Shutdown, Update & Restart
+    key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,path,0,winreg.KEY_SET_VALUE | winreg.KEY_WOW64_64KEY)
+    winreg.SetValueEx(key, "ShutdownFlyoutOptions", 0, winreg.REG_DWORD, 0xF)
+    winreg.CloseKey(key)
+  #Forced updates (Original Behavior)
+    winreg.SetValueEx(key, "ShutdownFlyoutOptions", 0, winreg.REG_DWORD, 0xA)
+    winreg.CloseKey(key)
+  #Removing update options entirely
+    winreg.SetValueEx(key, "ShutdownFlyoutOptions", 0, winreg.REG_DWORD, 0x0)
+    winreg.CloseKey(key)
+</code></pre>
+<h3>Affected directories</h3>
+regedit:<pre><code>Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator</code></pre>
+</section>
     <footer>
       <a> Tomáš Vaněk 2026 - Kaspar </a>
     </footer>
