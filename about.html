@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About – KASPAR Documentation</title>
+  <link rel="icon" type="image/x-icon" href="files/kaspardocs.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { padding-top: 60px; display: block; }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+
+    .about-hero {
+      max-width: 800px;
+      margin-bottom: 60px;
+      padding-top: 20px;
+    }
+    .about-hero img {
+      max-width: 260px;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .about-hero p {
+      font-size: 20px;
+      color: #c0c6e8;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    section p {
+      line-height: 1.8;
+      color: #c8cce0;
+      font-size: 15px;
+    }
+
+    section p + p {
+      margin-top: 14px;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .stat-box {
+      background: #151823;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 20px 28px;
+      text-align: center;
+      min-width: 120px;
+    }
+    .stat-box .num {
+      font-size: 32px;
+      font-weight: bold;
+      color: #9aa4ff;
+    }
+    .stat-box .label {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .script-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-width: 800px;
+    }
+    .script-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 10px 0;
+      border-bottom: 1px solid #1a1d26;
+      font-size: 14px;
+      gap: 20px;
+    }
+    .script-list li:last-child { border-bottom: none; }
+    .script-list a {
+      color: #9aa4ff;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .script-list a:hover { text-decoration: underline; }
+    .script-list span {
+      color: #666;
+      font-size: 13px;
+      text-align: right;
+    }
+
+    .author-card {
+      background: #151823;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 28px 32px;
+      max-width: 500px;
+      margin-top: 20px;
+    }
+    .author-card h3 {
+      margin: 0 0 6px 0;
+      font-size: 18px;
+      color: #e6e6e6;
+    }
+    .author-card p {
+      margin: 0 0 16px 0;
+      font-size: 14px;
+      color: #888;
+    }
+    .author-card a {
+      color: #9aa4ff;
+      text-decoration: none;
+      font-size: 14px;
+      margin-right: 20px;
+    }
+    .author-card a:hover { text-decoration: underline; }
+
+    blockquote {
+      border-left: 3px solid #22275a;
+      margin: 20px 0;
+      padding: 12px 20px;
+      color: #888;
+      font-style: italic;
+      font-size: 14px;
+      background: #0f1115;
+      border-radius: 0 6px 6px 0;
+    }
+  </style>
+</head>
+
+    <header class="top-navbar">
+    <div class="nav-left">
+      <a href="index.html"><img src="files/kasparlogo.png" alt="Logo"></a>
+    </div>
+    <nav class="nav-right">
+      <a href="index.html">Home</a>
+      <a href="scripts.html">Scripts</a>
+      <a href="foundbugs.html">Windows Bugs</a>
+      <a href="https://github.com/tomandesMSH">GitHub</a>
+      <a href="bug.html">Report a bug</a>
+      <a href="about.html">About</a>
+      <a href="https://forms.gle/pxvZQtuw6dKZWEZv8">Suggestions</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="about-hero" id="about">
+      <img src="files/kaspar.png" alt="KASPAR">
+      <p>"Take Control."</p>
+    </div>
+
+    <section id="why">
+      <h2>Why i made Kaspar</h2>
+      <p>
+        Windows has always had its quirks, but at some point it crossed a line. Ads in the Start menu.
+        Bing opening when you just wanted to launch an app and a right-click menu that hides half its options
+        behind an extra click. Those arent just some "niche" nerdy forgotten functions, those are everyday used features.
+        Microsoft is doing anything but benefiting the user like wdym i need an internet connection just to install the OS.
+        None of this was asked for. And they keep on pushing, doubling down and i am here to change that.
+      </p>
+      <h3>Meet Kaspar.</h3>
+      <p>
+        KASPAR started as a personal collection. Fixes written out of frustration, obscure registry tweaks only maniacs remember..
+        Over time, that collection of tweaks I knew by heart grew into something worth sharing, so I turned them into scripts you can run yourself.
+        Every script here solves a real problem that Microsoft either wont fix or keeps pushing back.
+      </p>
+    </section>
+
+    <section id="how">
+      <h2>How it works</h2>
+      <p> 
+        Most of what KASPAR does comes down to the Windows Registry it is a massive settings database that
+        Windows reads constantly. The vast majority of tweaks applied here are settings that already exist
+        inside Windows. Microsoft just doesn't give you a button for them. KASPAR does.
+      </p>
+      <p>
+        Scripts are written in <strong>Python</strong> using the <strong>WinReg</strong> library. They are then
+        compiled into standalone <code>.exe</code> files, so you don't need Python (or any of the dependencies)
+        installed to run them.
+        Every script is tested thoroughly, and almost all of them support reverting their changes back, so nothing is permanent.
+      </p>
+      <p style="font-size: 8px;">
+        Before running anything you should use
+        <a href="scripts.html#restorepoint">RestorePoint.py</a> to create a system snapshot first.
+      </p>
+    </section>
+
+    <section id="launcher">
+      <h2> KASPAR Launcher <code>[new]</code></h2>
+      <p>
+        Running individual scripts is fine, but annoying and unprofessional. 
+        KASPAR now comes with a GUI app that lets you pick and run scripts.<br> 
+        - built with Electron 
+      </p>
+    </section>
+
+    <section id="scripts-overview">
+      <h2>Script count</h2>
+
+      <div class="stat-row">
+        <div class="stat-box" style="flex: 1; padding: 36px 0;">
+          <div class="num" style="font-size: 72px;">18</div>
+          <div class="label">Scripts total</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box" style="flex: 1;">
+          <div class="num">14</div>
+          <div class="label">Python</div>
+        </div>
+        <div class="stat-box" style="flex: 1;">
+          <div class="num">2</div>
+          <div class="label">Batch</div>
+        </div>
+        <div class="stat-box" style="flex: 1;">
+          <div class="num">1</div>
+          <div class="label">PowerShell</div>
+        </div>
+        <div class="stat-box" style="flex: 1;">
+          <div class="num">1</div>
+          <div class="label">.cmd</div>
+        </div>
+      </div>
+
+    <section id="author">
+      <h2>Author</h2>
+      <p>Made and maintained by one person, out of genuine annoyance with Microsoft.</p>
+      <div class="author-card">
+        <h3>Tomáš Vaněk</h3>
+        <p>tomandesMSH</p>
+        <a href="https://github.com/tomandesMSH">GitHub</a>
+        <a href="bug.html">Report a bug</a>
+      </div>
+    </section>
+
+    <footer>
+      <a>Tomáš Vaněk – KasparDocs</a>
+    </footer>
+
+  </main>
+</body>
+</html>
