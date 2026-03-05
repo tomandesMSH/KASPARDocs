@@ -41,6 +41,7 @@
     <a href="scripts.html#disabledynamicsearch">DisableDynamicSearch.py</a>
     <a href="scripts.html#shutdownanddontupdate">ShutdownAndDontUpdate.py</a>
     <a href="scripts.html#kasparnro">LocalAccountDuringInstallation</a>
+    <a href="scripts.html#askcopilotdisable">AskCopilotDisable.py</a>
     <br><br>
     <a href="foundbugs.html"><h1>📰 Windows Bugs</h1></a>
     <a href="foundbugs.html#filepicker">Windows Filepicker</a>
@@ -66,7 +67,7 @@ exit</code></pre>
     <section id="rmenu">
       <h2>ClassicRClickMenu.py</h2>
       <span class="tag">python</span>
-      <span class="tag">microslop</span>
+      <span class="tag">right-click</span>
       <span class="tag">windows11</span>
 
       <p>
@@ -522,7 +523,24 @@ regedit:<pre><code>Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\
     <li><code>local.cmd</code> runs the cmd file you just downloaded.</li>
   </ol>
 </section>
+<section id="askcopilotdisable">
+  <h2>AskCopilotDisable.py</h2>
+  <span class="tag">python</span>
+  <span class="tag">right-click</span>
+  <span class="tag">copilot</span>
+  <p>Disables the "Ask Copilot" option in the right click menu.</p>
+  <h3>Script</h3>
+  <pre><code>path = r"Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked"
+#applying
+  key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+  winreg.SetValueEx(key, "{CB3B0003-8088-4EDE-8769-8B354AB2FF8C}", 0, winreg.REG_SZ, "")
+  winreg.SetValueEx(key, "{241F3F77-3B9E-4C64-8E2E-1A7C62C2F1AE}", 0, winreg.REG_SZ, "")
+#reverting
+  winreg.DeleteValue(key, "{CB3B0003-8088-4EDE-8769-8B354AB2FF8C}")
+  winreg.DeleteValue(key, "{241F3F77-3B9E-4C64-8E2E-1A7C62C2F1AE}")
+</code></pre>
 
+</section>
     <footer>
       <a> Tomáš Vaněk - KasparDocs </a>
     </footer>
