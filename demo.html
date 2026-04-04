@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KASPAR – Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --surface: #141416;
+    --surface2: #1c1c20;
+    --border: #2a2a30;
+    --accent: #04A2CC;
+    --accent2: #ff4d6d;
+    --text: #e8e8f0;
+    --muted: #5a5a6a;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Demo banner ── */
+  .demo-banner {
+    background: rgba(4,162,204,0.08);
+    border-bottom: 1px solid rgba(4,162,204,0.25);
+    padding: 10px 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    text-align: center;
+    letter-spacing: 0.05em;
+    z-index: 10;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .demo-banner a {
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  /* ── Layout ── */
+  .app { display: flex; flex: 1; position: relative; z-index: 1; overflow: hidden; }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: 220px; background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; flex-shrink: 0;
+  }
+  .logo { padding: 20px 24px 18px; border-bottom: 1px solid var(--border); }
+  .logo-text { font-family: var(--mono); font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: var(--text); }
+  .logo-text span { color: var(--accent); }
+  .logo-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-top: 8px; text-transform: uppercase; }
+
+  .nav { padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px; border-radius: 6px; font-size: 13px; font-weight: 600;
+    color: var(--muted); cursor: pointer; transition: all 0.15s;
+    border: 1px solid transparent; user-select: none; text-decoration: none;
+  }
+  .nav-item:hover { color: var(--text); background: var(--surface2); }
+  .nav-item.active { color: var(--accent); background: rgba(4,162,204,0.08); border-color: rgba(4,162,204,0.2); }
+
+  .sidebar-footer { padding: 16px; border-top: 1px solid var(--border); }
+  .version { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+
+  /* ── Main ── */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  .topbar {
+    padding: 20px 32px 0;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .page-title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+  .page-title span { color: var(--accent); }
+
+  /* ── Buttons ── */
+  .run-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--accent); color: #000; border: none; border-radius: 8px;
+    padding: 12px 24px; font-family: var(--sans); font-size: 14px; font-weight: 800;
+    cursor: pointer; letter-spacing: 0.02em; transition: all 0.15s;
+    position: relative; overflow: hidden;
+  }
+  .run-btn::after { content: ''; position: absolute; inset: 0; background: white; opacity: 0; transition: opacity 0.15s; }
+  .run-btn:hover::after { opacity: 0.15; }
+  .run-btn:active { transform: scale(0.97); }
+  .run-btn:disabled { background: var(--surface2); color: var(--muted); cursor: not-allowed; }
+  .run-btn:disabled::after { display: none; }
+
+  .revert-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: transparent; color: var(--accent2);
+    border: 1px solid var(--accent2); border-radius: 8px;
+    padding: 12px 24px; font-family: var(--sans); font-size: 14px; font-weight: 800;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .revert-btn:hover { background: rgba(255,77,109,0.08); }
+  .revert-btn:disabled { background: var(--surface2); color: var(--muted); border-color: var(--border); cursor: not-allowed; }
+
+  .restore-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 20px; font-family: var(--sans); font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .restore-btn:hover { border-color: #ffc800; color: #ffc800; background: rgba(255,200,0,0.06); }
+  .badge { background: rgba(0,0,0,0.25); border-radius: 4px; padding: 2px 7px; font-size: 12px; font-weight: 700; }
+
+  /* ── Script grid ── */
+  .content {
+    flex: 1; overflow-y: auto; padding: 24px 32px 32px;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+
+  .category-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px; margin-top: 28px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .category-label:first-child { margin-top: 4px; }
+  .category-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .script-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+
+  .script-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px 20px 18px; cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: flex-start; gap: 16px; position: relative; overflow: hidden;
+  }
+  .script-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--border); transition: background 0.15s;
+  }
+  .script-card:hover { border-color: rgba(4,162,204,0.3); background: var(--surface2); }
+  .script-card.selected { border-color: rgba(4,162,204,0.4); background: rgba(4,162,204,0.05); }
+  .script-card.selected::before { background: var(--accent); }
+
+  .script-check {
+    width: 18px; height: 18px; border: 1.5px solid var(--border); border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px; transition: all 0.15s; background: var(--surface2);
+  }
+  .script-card.selected .script-check { background: var(--accent); border-color: var(--accent); }
+  .check-icon { color: #000; font-size: 11px; font-weight: 700; opacity: 0; transition: opacity 0.1s; }
+  .script-card.selected .check-icon { opacity: 1; }
+
+  .script-info { flex: 1; min-width: 0; }
+  .script-name { font-size: 15px; font-weight: 700; color: var(--text); white-space: normal; line-height: 1.3; margin-bottom: 6px; }
+  .script-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.6; }
+
+  .script-tag {
+    font-family: var(--mono); font-size: 9px; padding: 2px 6px;
+    border-radius: 3px; letter-spacing: 0.05em; flex-shrink: 0; margin-top: 2px;
+  }
+  .tag-safe     { background: rgba(0,229,160,0.12);  color: #00e5a0; }
+  .tag-moderate { background: rgba(255,200,0,0.12);  color: #ffc800; }
+  .tag-advanced { background: rgba(255,77,109,0.12); color: var(--accent2); }
+
+  .about-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    margin-top: 8px; background: transparent;
+    border: 1px solid var(--border); color: var(--muted);
+    border-radius: 4px; padding: 3px 9px;
+    font-family: var(--mono); font-size: 10px;
+    cursor: pointer; transition: all 0.15s; text-decoration: none;
+  }
+  .about-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(4,162,204,0.05); }
+
+  /* ── Controls bar ── */
+  .controls {
+    display: flex; align-items: center; gap: 12px;
+    padding: 0 32px; margin-bottom: 4px; flex-shrink: 0;
+  }
+  .ctrl-btn {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+    border-radius: 5px; padding: 5px 12px; font-family: var(--sans);
+    font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
+  }
+  .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .selection-count { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-left: auto; }
+  .selection-count span { color: var(--accent); font-weight: 700; }
+
+  /* ── Download modal ── */
+  .dl-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85); z-index: 100;
+    align-items: center; justify-content: center;
+  }
+  .dl-overlay.active { display: flex; }
+  .dl-modal {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 36px; width: 440px; max-width: 90vw;
+    text-align: center;
+  }
+  .dl-modal .dl-icon { font-size: 40px; margin-bottom: 16px; }
+  .dl-modal h2 { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+  .dl-modal h2 span { color: var(--accent); }
+  .dl-modal p {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    line-height: 1.7; margin-bottom: 24px;
+  }
+  .dl-download-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--accent); color: #000; border: none; border-radius: 8px;
+    padding: 13px 28px; font-family: var(--sans); font-size: 14px; font-weight: 800;
+    cursor: pointer; text-decoration: none; transition: all 0.15s; margin-bottom: 12px;
+  }
+  .dl-download-btn:hover { opacity: 0.9; }
+  .dl-close-btn {
+    display: block; margin: 0 auto; background: transparent;
+    border: 1px solid var(--border); color: var(--muted); border-radius: 6px;
+    padding: 8px 20px; font-family: var(--sans); font-size: 13px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .dl-close-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .top-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #151823;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #222;
+  z-index: 1000;
+}
+
+.top-navbar img {
+  max-height: 40px;
+}
+
+.nav-title {
+  color: #cfd3ff;
+  font-size: 18px;
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.nav-right a {
+  color: #9aa4ff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.nav-right a:hover {
+  text-decoration: underline;
+}
+
+
+</style>
+</head>
+<body>
+
+    <header class="top-navbar">
+    <div class="nav-left">
+      <a href="index.html"><img src="files/kasparlogo.png" alt="Logo"></a>
+    </div>
+    <nav class="nav-right">
+      <a href="index.html">Home</a>
+      <a href="scripts.html">Scripts</a>
+      <a href="foundbugs.html">Windows Bugs</a>
+      <a href="https://github.com/tomandesMSH">GitHub</a>
+      <a href="bug.html">Report a bug</a>
+      <a href="about.html">About</a>
+      <a href="https://forms.gle/pxvZQtuw6dKZWEZv8">Suggestions</a>
+      <a href="demo.html">Demo</a>
+    </nav>
+  </header>
+
+<br><br><br>
+  
+<div class="demo-banner">
+  KASPAR [DEMO] — no changes are made to your system.
+  <a onclick="showDownload()">Download the real KASPAR →</a>
+</div>
+
+<div class="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-text">KASPAR</div>
+        <a class="nav-item" href="https://tomandesmsh.github.io/KASPARDocs/"><- Back to KASPARDocs</a>
+    </div>
+    <nav class="nav">
+      <div class="nav-item active">Scripts</div>
+      <a class="nav-item" href="https://tomandesmsh.github.io/KASPARDocs/about.html">About KASPAR</a>
+      <a class="nav-item" href="https://tomandesmsh.github.io/KASPARDocs/">Documentation</a>
+      <a class="nav-item" href="https://github.com/tomandesMSH/KASPAR" target="_bla nk">GitHub</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="version">Tomáš Vaněk – KASPAR Demo</div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="page active" id="page-scripts">
+      <div class="topbar">
+        <div class="page-title">Select <span>Tweaks</span></div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button class="restore-btn" onclick="showDownload()">🛡 Restore Point</button>
+          <button class="revert-btn" id="revertBtn" disabled onclick="showDownload()">
+            ↩ Revert <span class="badge" id="revertCount">0</span>
+          </button>
+          <button class="run-btn" id="runBtn" disabled onclick="showDownload()">
+            ▶ Run Tweaks <span class="badge" id="runCount">0</span>
+          </button>
+        </div>
+      </div>
+      <div class="controls" style="margin-top:16px;">
+        <button class="ctrl-btn" onclick="selectAll()">Select All</button>
+        <button class="ctrl-btn" onclick="selectNone()">Clear</button>
+        <div class="selection-count"><span id="countDisplay">0</span> selected</div>
+      </div>
+      <div class="content" id="scriptList"></div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Download modal -->
+<div class="dl-overlay" id="dlOverlay">
+  <div class="dl-modal">
+    <h2>Get <span>KASPAR</span></h2>
+    <p>
+      This is a demo. To actually apply tweaks<br>
+      to your Windows system, download the KASPAR app.
+    </p>
+    <a class="dl-download-btn" href="https://github.com/tomandesMSH/KASPAR/releases" target="_blank">
+      ↓ Download KASPAR
+    </a>
+    <button class="dl-close-btn" onclick="closeDownload()">Maybe later</button>
+  </div>
+</div>
+
+<script>
+const categories = [
+  {
+    name: "Privacy & Ads",
+    scripts: [
+      { id: "disableadid",    name: "Disable Advertisement ID",  desc: "Stops Windows from using your ad targeting ID",      tag: "safe",     docs: "disableadvertisementid" },
+      { id: "startads",       name: "Remove Start Menu Ads",     desc: "Remove sponsored app suggestions in Start menu",     tag: "safe",     docs: "startads" },
+      { id: "disabledynsrch", name: "Disable Dynamic Search",    desc: "Disables News/Articles in Start and Search",         tag: "safe",     docs: "disabledynamicsearch" },
+      { id: "localaccount",   name: "Local Account Setup",       desc: "Helps you create a local account",                  tag: "moderate", docs: "localaccount" },
+    ]
+  },
+  {
+    name: "UI & Shell Tweaks",
+    scripts: [
+      { id: "classicroclick", name: "Classic Right-Click Menu",  desc: "Restores the full context menu (Win10)",             tag: "safe",     docs: "classicrclickmenu" },
+      { id: "detailedsd",     name: "Detailed Shutdown",         desc: "Shows you what's happening on shutdown",            tag: "safe",     docs: "detailedshutdown" },
+      { id: "endtask",        name: "Enable End Task",           desc: "Adds End Task option to taskbar",                   tag: "safe",     docs: "endtask" },
+      { id: "dropfileremove", name: "Remove Drop File Prompt",   desc: "Disable drag-and-drop sharing window",              tag: "safe",     docs: "dropfileremove" },
+    ]
+  },
+  {
+    name: "System & Performance",
+    scripts: [
+      { id: "powerplan",        name: "Power Plan Manager",        desc: "Switch to high-performance or battery saver anytime", tag: "safe",     docs: "powerplan" },
+      { id: "devsetupregion",   name: "Device Setup Region",       desc: "Bypass region-locked Windows features",               tag: "moderate", docs: "devicesetupregion" },
+      { id: "localsearch",      name: "Local Search Only",         desc: "Restrict Windows Search to local files only",         tag: "safe",     docs: "localsearch" },
+      { id: "shutdownnoupdate", name: "Shutdown & Don't Update",   desc: "Control whether Windows forces updates on shutdown",  tag: "moderate", docs: "shutdownanddontupdate" },
+      { id: "askcopilot",       name: "Remove Ask Copilot",        desc: 'Removes the "Ask Copilot" option from the context menu.', tag: "safe", docs: "disableadvertisementid" },
+    ]
+  }
+];
+
+const selected = new Set();
+
+function tagClass(t) {
+  return t === 'safe' ? 'tag-safe' : t === 'moderate' ? 'tag-moderate' : 'tag-advanced';
+}
+
+function render() {
+  const container = document.getElementById('scriptList');
+  container.innerHTML = '';
+  categories.forEach(cat => {
+    const label = document.createElement('div');
+    label.className = 'category-label';
+    label.textContent = cat.name;
+    container.appendChild(label);
+    const grid = document.createElement('div');
+    grid.className = 'script-grid';
+    cat.scripts.forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'script-card' + (selected.has(s.id) ? ' selected' : '');
+      card.innerHTML = `
+        <div class="script-check"><span class="check-icon">✓</span></div>
+        <div class="script-info">
+          <div class="script-name">${s.name}</div>
+          <div class="script-desc">${s.desc}</div>
+          <a class="about-btn" href="https://tomandesmsh.github.io/KASPARDocs/scripts.html#${s.docs}"
+             target="_blank" onclick="event.stopPropagation()">↗ About</a>
+        </div>
+        <span class="script-tag ${tagClass(s.tag)}">${s.tag}</span>
+      `;
+      card.onclick = () => toggle(s.id);
+      grid.appendChild(card);
+    });
+    container.appendChild(grid);
+  });
+  updateCount();
+}
+
+function toggle(id) { selected.has(id) ? selected.delete(id) : selected.add(id); render(); }
+function selectAll()  { categories.forEach(c => c.scripts.forEach(s => selected.add(s.id))); render(); }
+function selectNone() { selected.clear(); render(); }
+
+function updateCount() {
+  const n = selected.size;
+  document.getElementById('countDisplay').textContent = n;
+  document.getElementById('runCount').textContent = n;
+  document.getElementById('revertCount').textContent = n;
+  document.getElementById('runBtn').disabled = n === 0;
+  document.getElementById('revertBtn').disabled = n === 0;
+}
+
+function showDownload() {
+  document.getElementById('dlOverlay').classList.add('active');
+}
+function closeDownload() {
+  document.getElementById('dlOverlay').classList.remove('active');
+}
+
+render();
+</script>
+</body>
+</html>
