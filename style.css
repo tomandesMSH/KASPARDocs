@@ -47,6 +47,12 @@ aside a:hover {
 main {
   flex: 1;
   padding: 32px;
+  min-width: 0;
+}
+
+main img {
+  max-width: 100%;
+  height: auto;
 }
 
 section {
@@ -192,3 +198,59 @@ footer {
 .site-footer nav a:hover { text-decoration: underline; }
 .site-footer .footer-copy { font-size: 12px; color: #444; }
 html, body { overflow-x: hidden; max-width: 100%; }
+
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  aside {
+    width: 100%;
+    min-height: auto;
+    box-sizing: border-box;
+    border-right: none;
+    border-bottom: 1px solid #222;
+  }
+
+  main {
+    padding: 20px 16px;
+  }
+
+  section {
+    max-width: 100%;
+  }
+
+  .top-navbar {
+    padding: 0 12px;
+  }
+
+  .nav-right {
+    display: flex;
+    max-width: 62vw;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .nav-right::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-right a {
+    margin-left: 14px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .nav-right a:first-child {
+    margin-left: 0;
+  }
+
+  .buttons-container {
+    gap: 16px;
+  }
+
+  .introtxt {
+    font-size: 20px !important;
+  }
+}

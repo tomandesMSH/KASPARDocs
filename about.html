@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About – KASPAR Documentation</title>
   <link rel="icon" type="image/x-icon" href="files/kaspardocs.png">
   <link rel="stylesheet" href="style.css">
@@ -131,6 +132,39 @@
       font-size: 14px;
       background: #0f1115;
       border-radius: 0 6px 6px 0;
+    }
+
+    @media (max-width: 768px) {
+      body { padding-top: 60px; }
+
+      main {
+        padding: 20px 16px;
+      }
+
+      .about-hero {
+        padding-top: 8px;
+        margin-bottom: 40px;
+      }
+      .about-hero img {
+        max-width: 180px;
+      }
+      .about-hero p {
+        font-size: 17px;
+      }
+
+      .script-list li {
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .script-list span {
+        text-align: left;
+      }
+
+      .author-card {
+        padding: 20px;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
     }
   </style>
 </head>
