@@ -305,49 +305,58 @@
     white-space: nowrap;
   }
   .nav-right a:first-child { margin-left: 0; }
+}
 
+.desktop-only-notice {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .demo-banner,
   .app {
+    display: none;
+  }
+
+  .desktop-only-notice {
+    display: flex;
     flex-direction: column;
-    overflow: visible;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 14px;
+    padding: 100px 28px;
+    min-height: 60vh;
   }
-
-  .sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
+  .desktop-only-notice .icon {
+    font-size: 40px;
   }
-  .nav {
-    flex-direction: row;
-    overflow-x: auto;
-    padding: 10px 12px;
+  .desktop-only-notice h2 {
+    font-size: 20px;
+    font-weight: 800;
   }
-  .nav-item { white-space: nowrap; }
-  .sidebar-footer { display: none; }
-
-  .main { overflow: visible; }
-  .content {
-    overflow-y: visible;
-    padding: 16px;
+  .desktop-only-notice h2 span {
+    color: var(--accent);
   }
-
-  .topbar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    padding: 16px 16px 0;
+  .desktop-only-notice p {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 320px;
   }
-  .topbar > div {
-    flex-wrap: wrap;
-  }
-  .page-title { font-size: 22px; }
-
-  .controls {
-    padding: 0 16px;
-    flex-wrap: wrap;
-  }
-
-  .script-grid {
-    grid-template-columns: 1fr;
+  .desktop-only-notice a {
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #000;
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 800;
+    text-decoration: none;
   }
 }
 
@@ -375,6 +384,16 @@
 <div class="demo-banner">
   KASPAR [DEMO] — no changes are made to your system.
   <a onclick="showDownload()">Download the real KASPAR →</a>
+</div>
+
+<div class="desktop-only-notice">
+  <div class="icon">🖥️</div>
+  <h2>Desktop <span>Only</span></h2>
+  <p>
+    The KASPAR demo is only available on PC.
+    Open this page on a desktop browser to try it out.
+  </p>
+  <a href="index.html">← Back to KASPARDocs</a>
 </div>
 
 <div class="app">
