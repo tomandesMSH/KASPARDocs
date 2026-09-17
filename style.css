@@ -212,6 +212,10 @@ html, body { overflow-x: hidden; max-width: 100%; }
     border-bottom: 1px solid #222;
   }
 
+  body.home aside {
+    display: none;
+  }
+
   main {
     padding: 20px 16px;
   }
