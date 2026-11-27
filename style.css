@@ -2,6 +2,18 @@
    Dark ink ramp, one accent (the logo blue), Segoe for the interface and
    Cascadia / JetBrains Mono for anything that came out of a terminal. */
 
+/* Self-hosted fonts (SIL OFL, see files/fonts/LICENSE-*) */
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url(files/fonts/inter-latin-ext-400-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap; src: url(files/fonts/inter-latin-400-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url(files/fonts/inter-latin-ext-500-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap; src: url(files/fonts/inter-latin-500-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url(files/fonts/inter-latin-ext-600-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap; src: url(files/fonts/inter-latin-600-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(files/fonts/jetbrains-mono-latin-ext-400-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: swap; src: url(files/fonts/jetbrains-mono-latin-400-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(files/fonts/jetbrains-mono-latin-ext-500-normal.woff2) format("woff2"); unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: swap; src: url(files/fonts/jetbrains-mono-latin-500-normal.woff2) format("woff2"); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+
 :root {
   --bg: #0c0d10;
   --deep: #090a0c;
@@ -12,7 +24,7 @@
 
   --text: #eceff4;
   --text-2: #a3a9b5;
-  --muted: #7c8391;
+  --muted: #858c9a;
 
   --accent: #04a2cc;
   --accent-ink: #061218;
@@ -126,6 +138,8 @@ kbd {
 .site-nav .spacer { flex: 1; }
 
 .menu-btn { display: none; }
+.menu-btn .icon-close, .site-header.open .menu-btn .icon-open { display: none; }
+.site-header.open .menu-btn .icon-close { display: block; }
 
 /* ---------- Buttons ---------- */
 
@@ -182,11 +196,11 @@ kbd {
 /* ---------- Home ---------- */
 
 .home-layout {
+  max-width: 1440px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
-  min-height: 100vh;
 }
-.docs-nav.home-nav { top: 0; height: 100vh; padding-top: 48px; }
 .docs-nav .nav-heading {
   font-family: var(--sans);
   height: auto;
@@ -199,8 +213,7 @@ kbd {
 }
 .docs-nav .nav-heading:hover { color: var(--accent); text-decoration: none; }
 
-.home-main { display: flex; flex-direction: column; min-width: 0; }
-.home-main .site-footer { margin-top: 0; }
+.home-main { min-width: 0; }
 
 .intro {
   flex: 1;
@@ -210,7 +223,7 @@ kbd {
   justify-content: center;
   text-align: center;
   padding: 64px 32px;
-  min-height: 80vh;
+  min-height: calc(72vh - var(--header));
 }
 .intro-logo { width: 400px; max-width: 80%; height: auto; margin-bottom: 16px; }
 .intro h1 { font-size: 36px; letter-spacing: -0.02em; }
@@ -222,8 +235,26 @@ kbd {
   color: var(--text-2);
 }
 .intro-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 40px; }
-.intro-buttons img { width: 16px; height: 16px; }
-.intro-buttons .btn-primary img { filter: brightness(0); opacity: 0.85; }
+
+/* What Kaspar fixes: the scripts grouped the way the launcher groups them */
+.fixes { padding: 0 48px; }
+.fixes > h2 { font-size: 24px; letter-spacing: -0.02em; }
+.fixes > p { color: var(--text-2); margin: 8px 0 0; max-width: 40rem; }
+.fix-group h3 { font-size: 13px; font-weight: 500; color: var(--muted); margin: 32px 0 12px; }
+.fix-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.fix-grid a {
+  display: block;
+  height: 100%;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--text);
+  transition: background-color 150ms var(--ease), border-color 150ms var(--ease);
+}
+.fix-grid a:hover { text-decoration: none; background: var(--raised); border-color: var(--line-strong); }
+.fix-grid .name { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 15px; }
+.fix-grid .desc { display: block; font-size: 13px; line-height: 1.5; color: var(--muted); margin-top: 4px; }
 
 /* ---------- Docs layout (scripts.html) ---------- */
 
@@ -285,13 +316,82 @@ kbd {
 }
 .docs-main h2::before { content: "<_ "; color: var(--accent); font-family: var(--mono); font-weight: 500; }
 
+/* Permalink next to each script name */
+.anchor { margin-left: 8px; color: var(--muted); font-weight: 400; opacity: 0; transition: opacity 150ms var(--ease); }
+.anchor:hover { color: var(--accent); text-decoration: none; }
+section:hover .anchor, .anchor:focus-visible { opacity: 1; }
+
+/* Risk, admin and revert at a glance */
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin: 0 0 8px; font-size: 13px; color: var(--text-2); }
+.meta .tags { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.meta .tag { margin: 0; }
+
+.risk { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--muted); flex-shrink: 0; }
+.risk::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.risk-safe::before { background: var(--positive); }
+.risk-moderate::before { background: var(--warning); }
+.risk-advanced::before { background: var(--negative); }
+
+/* Copy button on code blocks */
+.code { position: relative; }
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid var(--line-strong);
+  background: var(--raised);
+  color: var(--text-2);
+  font: 12px var(--sans);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 150ms var(--ease), color 150ms var(--ease);
+}
+.code:hover .copy-btn, .copy-btn:focus-visible, .copy-btn.done { opacity: 1; }
+.copy-btn:hover { color: var(--text); }
+.copy-btn.done { color: var(--positive); }
+@media (hover: none) { .copy-btn { opacity: 1; } }
+
+/* Script filter */
+.nav-filter {
+  display: block;
+  width: 100%;
+  height: 32px;
+  margin: 0 0 12px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  font: 13px var(--sans);
+}
+.nav-filter::placeholder { color: var(--muted); }
+.nav-filter:focus { outline: none; border-color: var(--accent); }
+.nav-empty { font-size: 13px; color: var(--muted); padding: 4px 8px; }
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -48px;
+  z-index: 300;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 14px;
+}
+.skip-link:focus { top: 8px; text-decoration: none; }
+
 .docs-main h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 24px 0 8px; }
 .docs-main h4 { font-size: 13px; font-weight: 500; color: var(--text-2); margin: 16px 0 8px; }
 .docs-main p { color: #c3c8d2; margin: 12px 0 0; }
 .docs-main p strong, .docs-main li strong { color: var(--text); font-weight: 600; }
 .docs-main ul, .docs-main ol { color: #c3c8d2; padding-left: 20px; margin: 12px 0 0; }
 .docs-main li + li { margin-top: 6px; }
-.docs-main pre + h3, .docs-main pre + h4 { margin-top: 24px; }
+.docs-main pre + h3, .docs-main pre + h4, .docs-main .code + h3, .docs-main .code + h4 { margin-top: 24px; }
+.docs-main li .code { margin: 8px 0 4px; }
 
 /* Tags read as a quiet line of meta, not pills */
 .tag {
@@ -353,6 +453,7 @@ kbd {
 .prose p + p { margin-top: 16px; }
 .prose .page-head p { margin-top: 12px; }
 .prose strong { color: var(--text); font-weight: 600; }
+.prose .intro-buttons { justify-content: flex-start; margin-top: 0; }
 
 .author {
   display: flex;
@@ -433,6 +534,7 @@ kbd {
 
   .docs, .home-layout { grid-template-columns: 1fr; }
   .home-nav { display: none; }
+  .fixes { padding: 0 16px; }
   .intro { padding: 48px 16px; min-height: 0; }
   .intro h1 { font-size: 28px; }
   .intro p { font-size: 17px; }

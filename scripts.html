@@ -4,18 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scripts – Kaspar documentation</title>
-  <meta name="description" content="What every Kaspar script does, its code and the registry keys it changes.">
+  <meta name="description" content="What every Kaspar script does, the code behind it and the registry keys it changes.">
+  <meta name="theme-color" content="#0c0d10">
+  <link rel="canonical" href="https://tomandes.eu/KASPARDocs/scripts.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KasparDocs">
+  <meta property="og:title" content="Scripts – Kaspar documentation">
+  <meta property="og:description" content="What every Kaspar script does, the code behind it and the registry keys it changes.">
+  <meta property="og:url" content="https://tomandes.eu/KASPARDocs/scripts.html">
+  <meta property="og:image" content="https://tomandes.eu/KASPARDocs/files/kasparlogo.png">
+  <meta name="twitter:card" content="summary">
   <link rel="icon" type="image/png" href="files/kaspardocs.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="site.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to content</a>
   <header class="site-header">
     <div class="inner">
       <a class="brand" href="index.html"><img src="files/kaspar.png" alt="Kaspar"></a>
-      <nav class="site-nav" aria-label="Main">
+      <nav class="site-nav" id="site-nav" aria-label="Main">
         <a href="scripts.html" aria-current="page">Scripts</a>
         <a href="demo.html">Demo</a>
         <a href="about.html">About</a>
@@ -24,7 +32,7 @@
         <span class="spacer"></span>
         <a class="btn btn-primary" href="https://github.com/tomandesMSH/KASPAR/releases">Download</a>
       </nav>
-      <button class="menu-btn" aria-label="Menu" aria-expanded="false"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <button class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="icon icon-open" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg><svg class="icon icon-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
   </header>
 
@@ -56,7 +64,7 @@
       </details>
     </aside>
 
-    <main class="docs-main">
+    <main class="docs-main" id="content">
       <div class="page-head">
         <h1>Scripts</h1>
         <p>What each script does, the code behind it and the registry keys it changes. Create a
@@ -64,9 +72,7 @@
       </div>
     <section id="rexplorer">
       <h2>rexplorer.bat</h2>
-      <span class="tag">essential</span>
-      <span class="tag">explorer</span>
-      <span class="tag">batch</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span class="tags"><span class="tag">essential</span><span class="tag">explorer</span></span></div>
       
       <p>
         A batch file that restarts explorer.exe, because sometimes restarting explorer is necessary to apply tweaks.
@@ -80,67 +86,55 @@ exit</code></pre>
 
     <section id="rmenu">
       <h2>ClassicRClickMenu.py</h2>
-      <span class="tag">python</span>
-      <span class="tag">right-click</span>
-      <span class="tag">windows11</span>
-      <span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Revertible</span><span class="tags"><span class="tag">right-click</span><span class="tag">windows11</span></span></div>
 
       <p>
         Brings back the normal and usable Windows 10 context menu.
       </p>
 
       <h3>Script</h3>
-      <pre><code> #Applying Windows 10 context menu
-    key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-    winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "")
-    winreg.CloseKey(key)
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    bat_file = os.path.join(script_dir, "rexplorer.bat")
-    subprocess.call(bat_file)
+      <pre><code>path = r"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32"
 
- #Reverting back to Windows 11 context menu.
-    try:
-        winreg.DeleteKey(winreg.HKEY_CURRENT_USER, path)
-        winreg.DeleteKey(winreg.HKEY_CURRENT_USER,r"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}")
-    except FileNotFoundError:
-        (Errormessage)
-</code></pre>
+# Applying the Windows 10 context menu
+key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+winreg.SetValueEx(key, "", 0, winreg.REG_SZ, "")
+winreg.CloseKey(key)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+subprocess.call(os.path.join(script_dir, "rexplorer.bat"))
 
-<h3>Affected directories</h3>
+# Reverting to the Windows 11 context menu
+winreg.DeleteKey(winreg.HKEY_CURRENT_USER, path)
+winreg.DeleteKey(winreg.HKEY_CURRENT_USER, r"Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}")</code></pre>
+
+<h3>Affected paths</h3>
 <span class="reg-label">regedit</span><pre><code>Computer\HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32</code></pre>
     </section>
 
     <section id="startads">
       <h2>StartAds.py</h2>
-      <span class="tag">python</span>
-      <span class="tag">start-menu</span>
-      <span class="tag">ads</span>
-      <span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Revertible</span><span class="tags"><span class="tag">start-menu</span><span class="tag">ads</span></span></div>
 
       <p>
         Removes advertisements in the start menu.
       </p>
 
       <h3>Script</h3>
-      <pre><code> #Path
-    key_path = r"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
-    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, key_path, 0, winreg.KEY_SET_VALUE)
- #Removing start ads
-    winreg.SetValueEx(key, "SystemPaneSuggestionsEnabled", 0, winreg.REG_DWORD, 0)
- #Reverting the tweak (bringing ads back)
-    winreg.SetValueEx(key, "SystemPaneSuggestionsEnabled", 0, winreg.REG_DWORD, 1)
-  </code></pre>
+      <pre><code>path = r"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
+key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_SET_VALUE)
 
-  <h3>Affected directories</h3>
+# Removing Start menu ads
+winreg.SetValueEx(key, "SystemPaneSuggestionsEnabled", 0, winreg.REG_DWORD, 0)
+
+# Reverting (bringing the ads back)
+winreg.SetValueEx(key, "SystemPaneSuggestionsEnabled", 0, winreg.REG_DWORD, 1)</code></pre>
+
+  <h3>Affected paths</h3>
 <span class="reg-label">regedit</span><pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager</code></pre>
     </section>
 
     <section id="endtask">
   <h2>EndTask.py</h2>
-  <span class="tag">python</span>
-  <span class="tag">taskbar</span>
-  <span class="tag">windows11</span>
-  <span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Revertible</span><span class="tags"><span class="tag">taskbar</span><span class="tag">windows11</span></span></div>
 
   <p>
     Enables the End Task option when right-clicking an app on the Windows 11 taskbar.<br>  
@@ -148,79 +142,68 @@ exit</code></pre>
     by Windows Explorer. </p>
 
   <h3>Script</h3>
-  <pre><code>PATH = r"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"
- #Applying
-    key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, PATH)
-    winreg.SetValueEx(key, "TaskbarEndTask", 0, winreg.REG_DWORD, 1)
-    winreg.CloseKey(key)
- #Reverting
-    key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, PATH, 0, winreg.KEY_SET_VALUE)
-    winreg.DeleteValue(key, "TaskbarEndTask")
-    winreg.CloseKey(key)</code></pre>
-    <h3>Affected directories</h3>
+  <pre><code>path = r"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings"
+
+# Applying
+key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+winreg.SetValueEx(key, "TaskbarEndTask", 0, winreg.REG_DWORD, 1)
+winreg.CloseKey(key)
+
+# Reverting
+key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_SET_VALUE)
+winreg.DeleteValue(key, "TaskbarEndTask")
+winreg.CloseKey(key)</code></pre>
+    <h3>Affected paths</h3>
 <span class="reg-label">regedit</span><pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings</code></pre>
 </section>
 
 <section id="localaccount">
   <h2>LocalAccount.py</h2>
-  <span class="tag">python</span>
-  <span class="tag">admin</span>
-  <span class="tag">windows</span>
-  <span class="tag">accounts</span>
-  <span class="tag">users</span>
+      <div class="meta"><span class="risk risk-moderate">moderate</span><span>Needs admin</span><span class="tags"><span class="tag">admin</span><span class="tag">accounts</span><span class="tag">users</span></span></div>
 
   <p>
     A Python script to create a new local user account. <br> You can choose to make the user an administrator or a standard account.
   </p>
 
   <h3>Script</h3>
-  <pre><code> #Creating the account
-    subprocess.run(["net", "user", username, password, "/add"], check=True)
- #Adding to Administrators (optional)
-    subprocess.run(["net", "localgroup", "Administrators", username, "/add"], check=True)
-    </code></pre>
+  <pre><code># Creating the account
+subprocess.run(["net", "user", username, password, "/add"], check=True)
+
+# Adding it to Administrators (optional)
+subprocess.run(["net", "localgroup", "Administrators", username, "/add"], check=True)</code></pre>
 </section>
 
 <section id="dropfileremove">
   <h2>DropFileRemove.py</h2>
-  <span class="tag">python</span>
-  <span class="tag">explorer</span>
-  <span class="tag">files</span>
-  <span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Needs admin</span><span>Revertible</span><span class="tags"><span class="tag">explorer</span><span class="tag">files</span></span></div>
 
   <p>
     In a <strong>recent update</strong>, Microsoft added a new "file sharing" option. If you drag a file, an intrusive pop-up window appears asking if you want to share it to other devices. This script removes that pop-up.
   </p>
 
   <h3>Script</h3>
-  <pre><code>PATH = r"SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\14\3895955085"
- #Applying
-    key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, PATH)
-    winreg.SetValueEx(key, "EnabledState", 0, winreg.REG_DWORD, 1)
-    winreg.SetValueEx(key, "EnabledStateOptions", 0, winreg.REG_DWORD, 0)
-    winreg.CloseKey(key)
- #Reverting
-    key = winreg.OpenKey(
-      winreg.HKEY_LOCAL_MACHINE,
-      PATH,
-      0,
-      winreg.KEY_SET_VALUE)
-    winreg.DeleteValue(key, "EnabledState")
-    winreg.DeleteValue(key, "EnabledStateOptions")
-    winreg.CloseKey(key)
-</code></pre>
+  <pre><code>path = r"SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\14\3895955085"
 
-  <h3>Affected directories</h3>
+# Applying
+key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path)
+winreg.SetValueEx(key, "EnabledState", 0, winreg.REG_DWORD, 1)
+winreg.SetValueEx(key, "EnabledStateOptions", 0, winreg.REG_DWORD, 0)
+winreg.CloseKey(key)
+
+# Reverting
+key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, path, 0, winreg.KEY_SET_VALUE)
+winreg.DeleteValue(key, "EnabledState")
+winreg.DeleteValue(key, "EnabledStateOptions")
+winreg.CloseKey(key)</code></pre>
+
+  <h3>Affected paths</h3>
   <span class="reg-label">regedit</span><pre><code>Computer\HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\FeatureManagement\Overrides\14\3895955085</code></pre>
 
 </section>
 
 <section id="powerplan">
   <h2>PowerPlan.py</h2>
-  <span class="tag">python</span>
-  <span class="tag">powercfg</span>
-  <span class="tag">windows</span>
-  <span class="tag">power-plan</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span class="tags"><span class="tag">powercfg</span><span class="tag">power-plan</span></span></div>
 
   <p>
     A Windows power plan manager.<br>
@@ -236,18 +219,20 @@ exit</code></pre>
       </ul>
 
   <h3>Script</h3>
-  <pre><code>os.system("powercfg -duplicatescheme " + base_plan)
+  <pre><code># Copy a preset, then rename the copy and make it active
+os.system("powercfg -duplicatescheme " + base_plan)
 output = os.popen("powercfg -list").read().splitlines()
-  new = ""
-  for line in output:
-      if base_name in line:
-          new = line.split(":")[1].split("(")[0].strip()
 
-  if new != "":
-      os.system('powercfg -changename ' + new + ' "' + name + '"')
-      os.system("powercfg -setactive " + new)</code></pre>
+new = ""
+for line in output:
+    if base_name in line:
+        new = line.split(":")[1].split("(")[0].strip()
 
-  <h3>Affected directories</h3>
+if new != "":
+    os.system('powercfg -changename ' + new + ' "' + name + '"')
+    os.system("powercfg -setactive " + new)</code></pre>
+
+  <h3>Affected paths</h3>
   <p>
     The script does not use the Windows registry, instead it uses <code>powercfg</code> (a command-line tool).
   </p>
@@ -255,266 +240,208 @@ output = os.popen("powercfg -list").read().splitlines()
 
 <section id="devicesetupregion">
   <h2>DeviceSetupRegion.py</h2>
-  <span class="tag">python</span>
-  <span class="tag">region</span>
-  <span class="tag">restrictions</span>
-  <span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-moderate">moderate</span><span>Needs admin</span><span class="tags"><span class="tag">region</span><span class="tag">restrictions</span></span></div>
 
   <p>
     <strong>DeviceSetupRegion.py</strong> changes the Windows device setup region and current location.
     Because Windows blocks certain features (ex. Disabling Bing search in the start menu) in certain countries, and usually checks the "Device Setup Region" value, which you cannot change, instead of the current location. All restrictions are documented in: <code>C:\Windows\System32\IntegratedServicesRegionPolicySet.json</code>
   </p>
   <h3>Script</h3>
-  <pre><code>key = winreg.OpenKey(
-winreg.HKEY_CURRENT_USER,
-r"Control Panel\International\Geo",
-0,
-winreg.KEY_SET_VALUE)
+  <pre><code># Current location
+key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Control Panel\International\Geo", 0, winreg.KEY_SET_VALUE)
 winreg.SetValueEx(key, "Name", 0, winreg.REG_SZ, abbrev)
-winreg.SetValueEx(key, "Nation", 0, winreg.REG_SZ, str(nation_id))winreg.CloseKey(key)
-winreg.DeleteValue(key2, "DeviceRegion")
-winreg.CloseKey(key2)
-key2 = winreg.OpenKey(
-winreg.HKEY_LOCAL_MACHINE,
-r"SOFTWARE\Microsoft\Windows\CurrentVersion\Control Panel\DeviceRegion",
-0,
-winreg.KEY_SET_VALUE)  </code></pre>
+winreg.SetValueEx(key, "Nation", 0, winreg.REG_SZ, str(nation_id))
+winreg.CloseKey(key)
 
-  <h3>Affected directories</h3>
+# Device setup region
+key2 = winreg.OpenKey(
+    winreg.HKEY_LOCAL_MACHINE,
+    r"SOFTWARE\Microsoft\Windows\CurrentVersion\Control Panel\DeviceRegion",
+    0,
+    winreg.KEY_SET_VALUE)
+winreg.DeleteValue(key2, "DeviceRegion")
+winreg.CloseKey(key2)</code></pre>
+
+  <h3>Affected paths</h3>
   <span class="reg-label">regedit</span><pre><code>Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Control Panel\DeviceRegion
 Computer\HKEY_CURRENT_USER\Control Panel\International\Geo</code></pre>
 </section>
 
 <section id="disableadvertisementid">
   <h2>DisableAdvertisementID.py</h2>
-  <span class="tag">python</span>
-  <span class="tag">privacy</span>
-  <span class="tag">ads</span>
-  <span class="tag">telemetry</span>
-  <span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Needs admin</span><span>Revertible</span><span class="tags"><span class="tag">privacy</span><span class="tag">ads</span><span class="tag">telemetry</span></span></div>
   <p>Disables most <strong>Advertisement ID</strong> settings scattered throughout the privacy options.<br> Reduces most telemetry and data collection.</p>
     <h3>Script</h3>
-  <pre><code>path = r"Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo"
-path = r"Software\Microsoft\Windows\CurrentVersion\Privacy"
-path = r"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
-path = r"Software\Policies\Microsoft\Windows\DataCollection"
+  <pre><code># Applying
+# Advertising ID
+key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo")
+winreg.SetValueEx(key, "Enabled", 0, winreg.REG_DWORD, 0)
+winreg.CloseKey(key)
 
- #Apply
-    # Ad ID
-      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-      winreg.SetValueEx(key, "Enabled", 0, winreg.REG_DWORD, 0)
-      winreg.CloseKey(key)
-        
-    # Tailored Experiences (formerly Personalized Offers)
-      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-      winreg.SetValueEx(key, "TailoredExperiencesWithDiagnosticDataEnabled", 0, winreg.REG_DWORD, 0)
-      winreg.CloseKey(key)
+# Tailored experiences (formerly personalized offers)
+key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\Privacy")
+winreg.SetValueEx(key, "TailoredExperiencesWithDiagnosticDataEnabled", 0, winreg.REG_DWORD, 0)
+winreg.CloseKey(key)
 
-    # Ad personalization  
-      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-      winreg.SetValueEx(key, "SubscribedContent-338393Enabled", 0, winreg.REG_DWORD, 0)
-      winreg.SetValueEx(key, "SubscribedContent-353694Enabled", 0, winreg.REG_DWORD, 0)
-      winreg.CloseKey(key)
+# Ad personalization
+key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager")
+winreg.SetValueEx(key, "SubscribedContent-338393Enabled", 0, winreg.REG_DWORD, 0)
+winreg.SetValueEx(key, "SubscribedContent-353694Enabled", 0, winreg.REG_DWORD, 0)
+winreg.CloseKey(key)
 
-    # Telemetry
-      key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path)
-      winreg.SetValueEx(key, "AllowTelemetry", 0, winreg.REG_DWORD, 0)
-      winreg.CloseKey(key)
+# Telemetry
+key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, r"Software\Policies\Microsoft\Windows\DataCollection")
+winreg.SetValueEx(key, "AllowTelemetry", 0, winreg.REG_DWORD, 0)
+winreg.CloseKey(key)
 
- #Reverting
-    # Ad ID
-      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-      winreg.SetValueEx(key, "Enabled", 1, winreg.REG_DWORD, 1)
-      winreg.CloseKey(key)
-      
-    # Tailored Experiences
-      path = r"Software\Microsoft\Windows\CurrentVersion\Privacy"
-      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-      winreg.SetValueEx(key, "TailoredExperiencesWithDiagnosticDataEnabled", 1, winreg.REG_DWORD, 1)
-      winreg.CloseKey(key)
+# Reverting: the same keys, with the values set back
+#   Enabled = 1
+#   TailoredExperiencesWithDiagnosticDataEnabled = 1
+#   SubscribedContent-338393Enabled = 1, SubscribedContent-353694Enabled = 1
+#   AllowTelemetry = 3</code></pre>
 
-    # Ad personalization
-      path = r"Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager"
-      key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-      winreg.SetValueEx(key, "SubscribedContent-338393Enabled", 1, winreg.REG_DWORD, 1)
-      winreg.SetValueEx(key, "SubscribedContent-353694Enabled", 1, winreg.REG_DWORD, 1)
-      winreg.CloseKey(key)
-    
-      # Telemetry
-      path = r"Software\Policies\Microsoft\Windows\DataCollection"
-      key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path)
-      winreg.SetValueEx(key, "AllowTelemetry", 3, winreg.REG_DWORD, 3)
-      winreg.CloseKey(key)
-  </code></pre>
-
-  <h3>Affected directories</h3>
-  <span class="reg-label">regedit</span><pre><code>
-  Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo
-  Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Privacy
-  Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
-  Computer\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\DataCollection
-</code></pre>
+  <h3>Affected paths</h3>
+  <span class="reg-label">regedit</span><pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo
+Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Privacy
+Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+Computer\HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\DataCollection</code></pre>
 </section>
 
 <section id="detailedshutdown">
 <h2>DetailedShutdown.py</h2>
-  <span class="tag">python</span>
-  <span class="tag">verbose</span>
-  <span class="tag">diagnostics</span>
-  <span class="tag">details</span>
-  <span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Needs admin</span><span>Revertible</span><span class="tags"><span class="tag">verbose</span><span class="tag">diagnostics</span><span class="tag">details</span></span></div>
 <p> When shutting down your computer, Windows normally shows “Shutting down” without any details. <br> By enabling this tweak, you can see detailed information about what the system is actually doing during the shutdown process, including any processes or tasks that might be preventing the shutdown. </p>
 <h3>Script</h3>
 <pre><code>path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
- #Applying
-    key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path)
-    winreg.SetValueEx(key, "VerboseStatus", 0, winreg.REG_DWORD, 1)
-    winreg.CloseKey(key)
- #Reverting
-    winreg.DeleteValue(key, "VerboseStatus")
-</code></pre>
+key = winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path)
 
-<h3>Affected directories</h3>
-<span class="reg-label">regedit</span><pre><code>
-Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
-</code></pre>
+# Applying
+winreg.SetValueEx(key, "VerboseStatus", 0, winreg.REG_DWORD, 1)
+
+# Reverting
+winreg.DeleteValue(key, "VerboseStatus")
+
+winreg.CloseKey(key)</code></pre>
+
+<h3>Affected paths</h3>
+<span class="reg-label">regedit</span><pre><code>Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System</code></pre>
 </section>
 
 <section id="localsearch"> 
 <h2>LocalSearch.py</h2>
-<span class="tag">python</span>
-<span class="tag">bing</span>
-<span class="tag">start-menu</span>
-<span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Revertible</span><span class="tags"><span class="tag">bing</span><span class="tag">start-menu</span></span></div>
 
 <p>Prevents Windows Search from showing online results. Most of the time, when using the Start menu, you are searching for something <strong>on your PC</strong>. Without this tweak, muscle memory and pressing enter without double checking after a search causes Microsoft Bing to open with search results for what you typed, instead of launching the app you actually wanted. For some reason, Microsoft prioritizes Bing over local search.<br> This tweak disables online search entirely.</p>
 <h3>Example</h3> <h4>Before</h4>
-<img class="example" src="files/localsearchyes.png" width="785" height="735" alt=""> <h4>After</h4> <img class="example" src="files/localsearchno.png" width="838" height="878" alt="">
+<picture><source srcset="files/localsearchyes.webp" type="image/webp"><img class="example" src="files/localsearchyes.png" width="785" height="735" alt="Start menu search for an app name showing Bing web results first" loading="lazy" decoding="async"></picture> <h4>After</h4> <picture><source srcset="files/localsearchno.webp" type="image/webp"><img class="example" src="files/localsearchno.png" width="838" height="878" alt="The same search with only local results after the tweak" loading="lazy" decoding="async"></picture>
 <h3>Script</h3>
-<pre><code>
-path = r"Software\Policies\Microsoft\Explorer"
- #Applying
-    key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-    winreg.SetValueEx(key, "DisableSearchBoxSuggestions", 0, winreg.REG_DWORD, 1)
-    winreg.CloseKey(key)
- #Reverting
-    winreg.DeleteValue(key, "DisableSearchBoxSuggestions")
+<pre><code>path = r"Software\Policies\Microsoft\Explorer"
+key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
 
-</code></pre>
+# Applying
+winreg.SetValueEx(key, "DisableSearchBoxSuggestions", 0, winreg.REG_DWORD, 1)
 
-<h3>Affected directories</h3>
-<span class="reg-label">regedit</span><pre><code>
-Computer\HKEY_CURRENT_USER\Software\Policies\Microsoft\Explorer
-</code></pre>
+# Reverting
+winreg.DeleteValue(key, "DisableSearchBoxSuggestions")
+
+winreg.CloseKey(key)</code></pre>
+
+<h3>Affected paths</h3>
+<span class="reg-label">regedit</span><pre><code>Computer\HKEY_CURRENT_USER\Software\Policies\Microsoft\Explorer</code></pre>
 </section>
 
 <section id="godmode">
 <h2>ControlPanelGodMode.bat</h2>
-<span class="tag">batch</span>
-<span class="tag">powershell</span>
-<span class="tag">hidden</span>
-<span class="tag">access</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span class="tags"><span class="tag">powershell</span><span class="tag">hidden</span><span class="tag">access</span></span></div>
 <p>Windows “GodMode” is a hidden feature in Windows that creates a folder which exposes all control panel options and other administrative tools in one place. Windows settings are usually spread across different menus and apps, GodMode sorts them into a single list.</p>
 <h3>Preview</h3>
-<img class="example" src="files/godmode.png" width="1676" height="864" alt="">
+<picture><source srcset="files/godmode.webp" type="image/webp"><img class="example" src="files/godmode.png" width="1676" height="864" alt="GodMode folder listing every Control Panel setting grouped by category" loading="lazy" decoding="async"></picture>
 <h3>Script</h3>
 <pre><code>for /f "tokens=2*" %%A in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" /v Desktop') do set desktop=%%B
 call set desktop=%desktop%
 powershell -Command "New-Item -Path '%desktop%\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}' -ItemType Directory -Force"
 </code></pre>
-<h3>Affected directories</h3>
+<h3>Affected paths</h3>
 <pre><code>%USERPROFILE%\Desktop  (C:\Users\YOURNAME\Desktop)</code></pre>
 </section>
 
 <section id="restorepoint">
 <h2>RestorePoint.py</h2>
-<span class="tag">python</span>
-<span class="tag">powershell</span>
-<span class="tag">safeguard</span>
-<span class="tag">protection</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Needs admin</span><span class="tags"><span class="tag">powershell</span><span class="tag">safeguard</span><span class="tag">protection</span></span></div>
 <p>A restore point in Windows is like a checkpoint in a game. It saves your important system files, programs, drivers, and registry settings. If something goes wrong, a restore point lets you roll your computer back to a previous, working state. Think of it as an undo button for your whole system. Keep in mind that even one of these scripts could potentially cause issues.</p>
 <div class="note"><svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><p>Microsoft also has a habit of moving or renaming directories in updates, which can break things unrelated to this project.</p></div>
 <h3>Script</h3>
 <h4>Python</h4>
-<pre><code> #Calling PowerShell as admin to create a new restore point
-    script_dir = Path(__file__).resolve().parent
-    powershell_script = script_dir / "restorepointhelper.ps1"
+<pre><code># Calling PowerShell as admin to create a new restore point
+script_dir = Path(__file__).resolve().parent
+powershell_script = script_dir / "restorepointhelper.ps1"
+subprocess.run([
+    "powershell",
+    "-ExecutionPolicy", "Bypass",
+    "-File", str(powershell_script),
+])
 
-    subprocess.run([
-        "powershell",
-        "-ExecutionPolicy", "Bypass",
-        "-File", str(powershell_script)
-
- # Removing all restore points
-    command = ["vssadmin", "delete", "shadows", "/for=c:", "/all", "/quiet"]
-    subprocess.run(command, check=True)
-</code></pre>
+# Removing all restore points
+command = ["vssadmin", "delete", "shadows", "/for=c:", "/all", "/quiet"]
+subprocess.run(command, check=True)</code></pre>
 <h4>PowerShell</h4>
-<pre><code> #Creating a new restore point
-    Checkpoint-Computer -Description "KASPAR Restore Point" -RestorePointType "MODIFY_SETTINGS" </code></pre>
-<h3>Affected directories</h3>
+<pre><code># Creating a new restore point
+Checkpoint-Computer -Description "KASPAR Restore Point" -RestorePointType "MODIFY_SETTINGS"</code></pre>
+<h3>Affected paths</h3>
 <pre><code>C:\System Volume Information</code></pre>
 </section>
 
 <section id="disabledynamicsearch">
 <h2>DisableDynamicSearch.py</h2>
-<span class="tag">python</span>
-<span class="tag">start-menu</span>
-<span class="tag">search</span>
-<span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Revertible</span><span class="tags"><span class="tag">start-menu</span><span class="tag">search</span></span></div>
 <p> Dynamic Search is basically, again, turning the Windows search bar into something that isn't searching on Windows. It shows you news you did not ask for, what "Day" it is, which is cool and all, but not in my search bar.</p>
 <h3>Example</h3>
 <h4>Before</h4>
-<img class="example" src="files/dynamicsearch.png" width="786" height="740" alt=""> <h4>After</h4> <img class="example" src="files/nodynamicsearch.png" width="839" height="876" alt="">
+<picture><source srcset="files/dynamicsearch.webp" type="image/webp"><img class="example" src="files/dynamicsearch.png" width="786" height="740" alt="Windows Search panel filled with news and a daily highlight" loading="lazy" decoding="async"></picture> <h4>After</h4> <picture><source srcset="files/nodynamicsearch.webp" type="image/webp"><img class="example" src="files/nodynamicsearch.png" width="839" height="876" alt="Windows Search panel showing only recent apps and files after the tweak" loading="lazy" decoding="async"></picture>
 <h3>Script</h3>
-<pre><code>#PATH "Software\Microsoft\Windows\CurrentVersion\SearchSettings"
-  reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_SET_VALUE)
-#Applying
-  winreg.SetValueEx(reg_key, value_name, 0, winreg.REG_DWORD, 0)
-#Reverting
-  winreg.SetValueEx(reg_key, value_name, 0, winreg.REG_DWORD, 1)
-</code></pre>
-<h3>Affected directories</h3>
+<pre><code>path = r"Software\Microsoft\Windows\CurrentVersion\SearchSettings"
+reg_key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, path, 0, winreg.KEY_SET_VALUE)
+
+# Applying
+winreg.SetValueEx(reg_key, value_name, 0, winreg.REG_DWORD, 0)
+
+# Reverting
+winreg.SetValueEx(reg_key, value_name, 0, winreg.REG_DWORD, 1)</code></pre>
+<h3>Affected paths</h3>
 <span class="reg-label">regedit</span><pre><code>Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings</code></pre>
 
 </section>
 
 <section id="shutdownanddontupdate">
 <h2>ShutdownAndDontUpdate.py</h2>
-<span class="tag">python</span>
-<span class="tag">windows-update</span>
-<span class="tag">forced-updates</span>
-<span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-moderate">moderate</span><span>Needs admin</span><span>Revertible</span><span class="tags"><span class="tag">windows-update</span><span class="tag">forced-updates</span></span></div>
 <p> Brings back the "Shutdown and Restart" options in the start menu, even if there's an update pending. Also allows you to disable the update option entirely.</p>
 <h3>Example</h3>
-<h4>Forced update (original behavior)</h4><img class="example" src="files/shutdownflyout-a.png" width="200" height="132" alt="">
-<h4>Both options (Recommended)</h4> <img class="example" src="files/shutdownflyout-f.png" width="200" height="196" alt="">
-<h4>No update options</h4><img class="example" src="files/shutdownflyout-0.png" width="125" height="135" alt="">
+<h4>Forced update (original behavior)</h4><img class="example" src="files/shutdownflyout-a.png" width="200" height="132" alt="Power menu with only Update and shut down and Update and restart" loading="lazy" decoding="async">
+<h4>Both options (Recommended)</h4> <img class="example" src="files/shutdownflyout-f.png" width="200" height="196" alt="Power menu with Shut down, Restart and both update options" loading="lazy" decoding="async">
+<h4>No update options</h4><img class="example" src="files/shutdownflyout-0.png" width="125" height="135" alt="Power menu with Shut down and Restart and no update options" loading="lazy" decoding="async">
 <h3>Script</h3>
-<pre><code> #PATH "SOFTWARE\Microsoft\WindowsUpdate\Orchestrator"
-  #Shutdown, Restart + Update & Shutdown, Update & Restart
-    key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,path,0,winreg.KEY_SET_VALUE | winreg.KEY_WOW64_64KEY)
-    winreg.SetValueEx(key, "ShutdownFlyoutOptions", 0, winreg.REG_DWORD, 0xF)
-    winreg.CloseKey(key)
-  #Forced updates (Original Behavior)
-    winreg.SetValueEx(key, "ShutdownFlyoutOptions", 0, winreg.REG_DWORD, 0xA)
-    winreg.CloseKey(key)
-  #Removing update options entirely
-    winreg.SetValueEx(key, "ShutdownFlyoutOptions", 0, winreg.REG_DWORD, 0x0)
-    winreg.CloseKey(key)
-</code></pre>
-<h3>Affected directories</h3>
+<pre><code>path = r"SOFTWARE\Microsoft\WindowsUpdate\Orchestrator"
+key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, path, 0, winreg.KEY_SET_VALUE | winreg.KEY_WOW64_64KEY)
+
+# Shut down and Restart, plus both update options (recommended)
+winreg.SetValueEx(key, "ShutdownFlyoutOptions", 0, winreg.REG_DWORD, 0xF)
+
+# Forced updates (original behavior)
+winreg.SetValueEx(key, "ShutdownFlyoutOptions", 0, winreg.REG_DWORD, 0xA)
+
+# No update options at all
+winreg.SetValueEx(key, "ShutdownFlyoutOptions", 0, winreg.REG_DWORD, 0x0)
+
+winreg.CloseKey(key)</code></pre>
+<h3>Affected paths</h3>
 <span class="reg-label">regedit</span><pre><code>Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\Orchestrator</code></pre>
 </section>
 
 <section id="kasparnro">
   <h2>LocalAccountDuringInstallation / KasparNRO</h2>
-  <span class="tag">cmd-script</span>
-  <span class="tag">windows</span>
-  <span class="tag">oobe</span>
-  <span class="tag">local-account</span>
+      <div class="meta"><span class="risk risk-advanced">advanced</span><span>Needs admin</span><span class="tags"><span class="tag">oobe</span><span class="tag">local-account</span></span></div>
 
-  <h3>About</h3>
   <p>
     This script allows you to install Windows <strong>without needing an internet connection</strong>.<br>
     Made with love to make the installation process faster and less painful.<br>
@@ -524,17 +451,20 @@ powershell -Command "New-Item -Path '%desktop%\GodMode.{ED7BA470-8E54-465E-825C-
 
   <h3>How to use</h3>
   <p>
-    Go through the installation process normally.<br>
-    Right when you get to this step (OOBE):
+    Go through the installation process normally. Stop at the first setup screen after the reboot (OOBE),
+    the one that asks <strong>"Is this the right country or region?"</strong>, and then:
   </p>
-  <img class="example" src="https://camo.githubusercontent.com/32214d8169dc808bddb3a4a5c87b7ff2e7ee3777cf53ca77cacb92609c1e4c67/68747470733a2f2f7777772e707567657473797374656d732e636f6d2f7069635f646973702e7068703f69643d3730383031" alt="Choose Country or Region menu">
-  <p>
-    Press <kbd>Shift</kbd> + <kbd>F10</kbd> on your keyboard. A Command Prompt window will pop up.<br>
-    Type in:  <code>curl -L tinyurl.com/kasparnro -o local.cmd</code> and confirm with <kbd>Enter</kbd>.<br>
-    A download process will begin. After it finishes (usually a second or two), type <code>local.cmd</code>.<br>
-    Your computer will automatically restart. Once Windows boots up again, answer the region questions.<br>
-    The local account will already be created for you.
-  </p>
+  <ol>
+    <li>Press <kbd>Shift</kbd> + <kbd>F10</kbd>. A Command Prompt window will pop up.</li>
+    <li>Type this and confirm with <kbd>Enter</kbd>:
+      <pre><code>curl -L tinyurl.com/kasparnro -o local.cmd</code></pre>
+    </li>
+    <li>When the download finishes (usually a second or two), run it:
+      <pre><code>local.cmd</code></pre>
+    </li>
+    <li>Your computer restarts automatically. Once Windows boots up again, answer the region questions.
+      The local account will already be created for you.</li>
+  </ol>
 
   <h3>Changing the local account name</h3>
   <p>After installation, you can change the local account’s display name:</p>
@@ -548,35 +478,33 @@ powershell -Command "New-Item -Path '%desktop%\GodMode.{ED7BA470-8E54-465E-825C-
   <ol>
     <li><strong>CURL</strong> = transfers/<strong>downloads data</strong> from a server, where the script is hosted (GitHub, shortened via TinyURL).</li>
     <li><strong>-L</strong> is a flag that tells CURL to follow <strong>redirects</strong>, which is needed because TinyURL redirects to raw.githubusercontent.com.</li>
-    <li><code>tinyurl.com/kasparnro</code> -> <code>https://raw.githubusercontent.com/tomandesMSH/KASPAR/main/scripts/LocalAccountDuringInstallation/script.cmd</code><br>(NRO/BypassNRO was a command that did the same, but Microsoft abandoned it in March 2025.)</li>
+    <li><code>tinyurl.com/kasparnro</code> → <code>https://raw.githubusercontent.com/tomandesMSH/KASPAR/main/scripts/LocalAccountDuringInstallation/script.cmd</code><br>(NRO/BypassNRO was a command that did the same, but Microsoft abandoned it in March 2025.)</li>
     <li><strong>-o local.cmd</strong> tells CURL to save the downloaded file as "local.cmd". You can change the name if you want.</li>
     <li><code>local.cmd</code> runs the cmd file you just downloaded.</li>
   </ol>
 </section>
 <section id="askcopilotdisable">
   <h2>AskCopilotDisable.py</h2>
-  <span class="tag">python</span>
-  <span class="tag">right-click</span>
-  <span class="tag">copilot</span>
-  <span class="tag">registry</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Revertible</span><span class="tags"><span class="tag">right-click</span><span class="tag">copilot</span></span></div>
   <p>Disables the "Ask Copilot" option in the right click menu.</p>
   <h3>Script</h3>
   <pre><code>path = r"Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked"
-#applying
-  key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
-  winreg.SetValueEx(key, "{CB3B0003-8088-4EDE-8769-8B354AB2FF8C}", 0, winreg.REG_SZ, "")
-  winreg.SetValueEx(key, "{241F3F77-3B9E-4C64-8E2E-1A7C62C2F1AE}", 0, winreg.REG_SZ, "")
-#reverting
-  winreg.DeleteValue(key, "{CB3B0003-8088-4EDE-8769-8B354AB2FF8C}")
-  winreg.DeleteValue(key, "{241F3F77-3B9E-4C64-8E2E-1A7C62C2F1AE}")
-</code></pre>
+key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, path)
+
+# Applying
+winreg.SetValueEx(key, "{CB3B0003-8088-4EDE-8769-8B354AB2FF8C}", 0, winreg.REG_SZ, "")
+winreg.SetValueEx(key, "{241F3F77-3B9E-4C64-8E2E-1A7C62C2F1AE}", 0, winreg.REG_SZ, "")
+
+# Reverting
+winreg.DeleteValue(key, "{CB3B0003-8088-4EDE-8769-8B354AB2FF8C}")
+winreg.DeleteValue(key, "{241F3F77-3B9E-4C64-8E2E-1A7C62C2F1AE}")
+
+winreg.CloseKey(key)</code></pre>
 
 </section>
 <section id="micvolume">
   <h2>MicVolume.py</h2>
-  <span class="tag">python</span>
-  <span class="tag">audio</span>
-  <span class="tag">microphone</span>
+      <div class="meta"><span class="risk risk-safe">safe</span><span>Revertible</span><span class="tags"><span class="tag">audio</span><span class="tag">microphone</span></span></div>
 
   <p>
     Windows has a habit of quietly lowering or muting your microphone, usually after a driver update or when a new
@@ -592,15 +520,15 @@ powershell -Command "New-Item -Path '%desktop%\GodMode.{ED7BA470-8E54-465E-825C-
 interface = mic.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 
- #Applying
-    volume.SetMasterVolumeLevelScalar(1.0, None)
-    volume.SetMute(0, None)
- #Reverting
-    volume.SetMasterVolumeLevelScalar(0.0, None)
-    volume.SetMute(0, None)
-</code></pre>
+# Applying: full volume, unmuted
+volume.SetMasterVolumeLevelScalar(1.0, None)
+volume.SetMute(0, None)
 
-  <h3>Affected directories</h3>
+# Reverting
+volume.SetMasterVolumeLevelScalar(0.0, None)
+volume.SetMute(0, None)</code></pre>
+
+  <h3>Affected paths</h3>
   <p>
     The script does not touch the Windows registry, instead it uses the Core Audio API through the
     <code>pycaw</code> library.
@@ -622,6 +550,5 @@ volume = cast(interface, POINTER(IAudioEndpointVolume))
       <span>Tomáš Vaněk · KasparDocs · MIT license</span>
     </div>
   </footer>
-  <script src="site.js"></script>
 </body>
 </html>

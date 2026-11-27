@@ -3,15 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="Kaspar demo">
-<meta property="og:description" content="Try the Kaspar launcher in your browser: pick the Windows tweaks you want, no changes are made to your system.">
-<meta property="og:image" content="https://github.com/tomandesMSH/KASPAR/raw/main/files/kasparlogo.png?raw=true">
 <title>Demo – Kaspar</title>
+  <meta name="description" content="Try the Kaspar launcher in your browser: pick the Windows tweaks you want, no changes are made to your system.">
+  <meta name="theme-color" content="#0c0d10">
+  <link rel="canonical" href="https://tomandes.eu/KASPARDocs/demo.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KasparDocs">
+  <meta property="og:title" content="Demo – Kaspar">
+  <meta property="og:description" content="Try the Kaspar launcher in your browser: pick the Windows tweaks you want, no changes are made to your system.">
+  <meta property="og:url" content="https://tomandes.eu/KASPARDocs/demo.html">
+  <meta property="og:image" content="https://tomandes.eu/KASPARDocs/files/kasparlogo.png">
+  <meta name="twitter:card" content="summary">
 <link rel="icon" type="image/png" href="files/kaspardocs.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="site.js" defer></script>
 <style>
   body { display: flex; flex-direction: column; min-height: 100vh; }
 
@@ -115,11 +120,6 @@
   .about-link .icon { width: 12px; height: 12px; }
   .about-link:hover { color: var(--accent); }
 
-  .risk { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--muted); flex-shrink: 0; }
-  .risk::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-  .risk-safe::before { background: var(--positive); }
-  .risk-moderate::before { background: var(--warning); }
-  .risk-advanced::before { background: var(--negative); }
 
   /* Download dialog */
   .dl-overlay {
@@ -161,10 +161,11 @@
 </style>
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to content</a>
   <header class="site-header">
     <div class="inner">
       <a class="brand" href="index.html"><img src="files/kaspar.png" alt="Kaspar"></a>
-      <nav class="site-nav" aria-label="Main">
+      <nav class="site-nav" id="site-nav" aria-label="Main">
         <a href="scripts.html">Scripts</a>
         <a href="demo.html" aria-current="page">Demo</a>
         <a href="about.html">About</a>
@@ -173,7 +174,7 @@
         <span class="spacer"></span>
         <a class="btn btn-primary" href="https://github.com/tomandesMSH/KASPAR/releases">Download</a>
       </nav>
-      <button class="menu-btn" aria-label="Menu" aria-expanded="false"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <button class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="icon icon-open" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg><svg class="icon icon-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     </div>
   </header>
 
@@ -215,7 +216,7 @@
       <div class="sidebar-footer">Kaspar demo · Tomáš Vaněk</div>
     </aside>
 
-    <main class="main">
+    <main class="main" id="content">
       <div class="topbar">
         <h1 class="page-title">Select tweaks</h1>
         <div class="actions">
@@ -242,7 +243,7 @@
     </main>
   </div>
 
-  <div class="dl-overlay" id="dlOverlay" onclick="if (event.target === this) closeDownload()">
+  <div class="dl-overlay" id="dlOverlay" inert onclick="if (event.target === this) closeDownload()">
     <div class="dl-modal" role="dialog" aria-modal="true" aria-labelledby="dlTitle">
       <h2 id="dlTitle">Get Kaspar</h2>
       <p>This is a demo. To apply tweaks to your Windows system, download the Kaspar app.</p>
@@ -284,6 +285,7 @@ const categories = [
       { id: "devsetupregion",   name: "Device setup region",     desc: "Unlocks features Windows blocks by region",       tag: "moderate", docs: "devicesetupregion" },
       { id: "localsearch",      name: "Local search only",       desc: "Keeps Bing results out of Windows Search",        tag: "safe",     docs: "localsearch" },
       { id: "shutdownnoupdate", name: "Shut down without updating", desc: "Choose whether shutdown installs updates",     tag: "moderate", docs: "shutdownanddontupdate" },
+      { id: "micvolume",        name: "Fix microphone volume",   desc: "Sets the microphone back to 100% and unmutes it", tag: "safe",     docs: "micvolume" },
     ]
   }
 ];
@@ -345,12 +347,32 @@ function updateCount() {
   document.getElementById('revertBtn').disabled = n === 0;
 }
 
-function showDownload() { document.getElementById('dlOverlay').classList.add('active'); }
-function closeDownload() { document.getElementById('dlOverlay').classList.remove('active'); }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDownload(); });
+const overlay = document.getElementById('dlOverlay');
+let returnFocus = null;
+function showDownload() {
+  returnFocus = document.activeElement;
+  overlay.inert = false;
+  overlay.classList.add('active');
+  overlay.querySelector('.btn-primary').focus();
+}
+function closeDownload() {
+  if (!overlay.classList.contains('active')) return;
+  overlay.classList.remove('active');
+  overlay.inert = true;
+  if (returnFocus) returnFocus.focus();
+}
+document.addEventListener('keydown', e => {
+  if (!overlay.classList.contains('active')) return;
+  if (e.key === 'Escape') { e.preventDefault(); closeDownload(); }
+  if (e.key === 'Tab') { // keep focus inside the dialog
+    const f = overlay.querySelectorAll('a, button');
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
 
 render();
 </script>
-<script src="site.js"></script>
 </body>
 </html>
