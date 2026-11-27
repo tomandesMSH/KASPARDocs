@@ -3,75 +3,140 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KASPAR Documentation</title>
-  <meta name="description" content="Kaspar is a collection of scripts that restore control over Windows.">
+  <title>Kaspar documentation</title>
+  <meta name="description" content="Kaspar is a collection of scripts that restore control over Windows: no Start menu ads, no Bing in Search, the classic context menu and more.">
+  <meta name="theme-color" content="#0c0d10">
+  <link rel="canonical" href="https://tomandes.eu/KASPARDocs/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="KasparDocs">
+  <meta property="og:title" content="Kaspar documentation">
+  <meta property="og:description" content="Kaspar is a collection of scripts that restore control over Windows: no Start menu ads, no Bing in Search, the classic context menu and more.">
+  <meta property="og:url" content="https://tomandes.eu/KASPARDocs/">
+  <meta property="og:image" content="https://tomandes.eu/KASPARDocs/files/kasparlogo.png">
+  <meta name="twitter:card" content="summary">
   <link rel="icon" type="image/png" href="files/kaspardocs.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="site.js" defer></script>
 </head>
 <body class="home">
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="brand" href="index.html"><img src="files/kaspar.png" alt="Kaspar"></a>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <a href="scripts.html">Scripts</a>
+        <a href="demo.html">Demo</a>
+        <a href="about.html">About</a>
+        <a href="bug.html">Report a bug</a>
+        <a href="https://github.com/tomandesMSH/KASPAR">GitHub</a>
+        <span class="spacer"></span>
+        <a class="btn btn-primary" href="https://github.com/tomandesMSH/KASPAR/releases">Download</a>
+      </nav>
+      <button class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="site-nav"><svg class="icon icon-open" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg><svg class="icon icon-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+  </header>
+
   <div class="home-layout">
     <aside class="docs-nav home-nav" aria-label="Scripts">
       <a class="nav-heading" href="scripts.html">Scripts</a>
       <ol>
-        <li><a href="scripts.html#rexplorer">rexplorer.bat</a></li>
-        <li><a href="scripts.html#rmenu">ClassicRClickMenu.py</a></li>
+        <li><a href="scripts.html#disableadvertisementid">DisableAdvertisementID.py</a></li>
         <li><a href="scripts.html#startads">StartAds.py</a></li>
+        <li><a href="scripts.html#disabledynamicsearch">DisableDynamicSearch.py</a></li>
+        <li><a href="scripts.html#localsearch">LocalSearch.py</a></li>
+        <li><a href="scripts.html#rmenu">ClassicRClickMenu.py</a></li>
         <li><a href="scripts.html#endtask">EndTask.py</a></li>
-        <li><a href="scripts.html#localaccount">LocalAccount.py</a></li>
         <li><a href="scripts.html#dropfileremove">DropFileRemove.py</a></li>
+        <li><a href="scripts.html#askcopilotdisable">AskCopilotDisable.py</a></li>
+        <li><a href="scripts.html#detailedshutdown">DetailedShutdown.py</a></li>
+        <li><a href="scripts.html#shutdownanddontupdate">ShutdownAndDontUpdate.py</a></li>
+        <li><a href="scripts.html#restorepoint">RestorePoint.py</a></li>
         <li><a href="scripts.html#powerplan">PowerPlan.py</a></li>
         <li><a href="scripts.html#devicesetupregion">DeviceSetupRegion.py</a></li>
-        <li><a href="scripts.html#disableadvertisementid">DisableAdvertisementID.py</a></li>
-        <li><a href="scripts.html#detailedshutdown">DetailedShutdown.py</a></li>
-        <li><a href="scripts.html#localsearch">LocalSearch.py</a></li>
-        <li><a href="scripts.html#godmode">ControlPanelGodMode.bat</a></li>
-        <li><a href="scripts.html#restorepoint">RestorePoint.py</a></li>
-        <li><a href="scripts.html#disabledynamicsearch">DisableDynamicSearch.py</a></li>
-        <li><a href="scripts.html#shutdownanddontupdate">ShutdownAndDontUpdate.py</a></li>
+        <li><a href="scripts.html#localaccount">LocalAccount.py</a></li>
         <li><a href="scripts.html#kasparnro">LocalAccountDuringInstallation</a></li>
-        <li><a href="scripts.html#askcopilotdisable">AskCopilotDisable.py</a></li>
         <li><a href="scripts.html#micvolume">MicVolume.py</a></li>
+        <li><a href="scripts.html#godmode">ControlPanelGodMode.bat</a></li>
+        <li><a href="scripts.html#rexplorer">rexplorer.bat</a></li>
       </ol>
     </aside>
 
-    <div class="home-main">
-      <main class="intro" id="intro">
-        <img class="intro-logo" src="files/kasparlogo.png" alt="Kaspar">
+    <main class="home-main" id="content">
+      <div class="intro">
+        <img class="intro-logo" src="files/kasparlogo.png" width="400" alt="Kaspar">
         <h1>The official documentation for Kaspar</h1>
         <p>
           Kaspar is a collection of scripts that restore control over Windows, addressing the quirks,
           restrictions and inefficiencies Microsoft has introduced over the years.
         </p>
         <div class="intro-buttons">
-          <a class="btn btn-secondary btn-lg" href="scripts.html">
-            <img src="files/kaspardocs.png" alt="">Documentation
-          </a>
           <a class="btn btn-primary btn-lg" href="https://github.com/tomandesMSH/KASPAR/releases">
-            <img src="files/download.png" alt="">Download Kaspar
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+            Download Kaspar
           </a>
-          <a class="btn btn-secondary btn-lg" href="https://github.com/tomandesMSH/">
-            <img src="files/githublogo.png" alt="">GitHub
+          <a class="btn btn-secondary btn-lg" href="scripts.html">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Read the docs
+          </a>
+          <a class="btn btn-secondary btn-lg" href="demo.html">
+            <svg class="icon" viewBox="0 0 24 24"><path d="m6 3 14 9-14 9z"/></svg>
+            Try the demo
           </a>
         </div>
-      </main>
+      </div>
 
-      <footer class="site-footer">
-        <div class="inner">
-          <nav aria-label="Footer">
-            <a href="scripts.html">Scripts</a>
-            <a href="https://github.com/tomandesMSH">GitHub</a>
-            <a href="bug.html">Report a bug</a>
-            <a href="about.html">About Kaspar</a>
-            <a href="https://forms.gle/pxvZQtuw6dKZWEZv8">Suggestions</a>
-            <a href="demo.html">Demo</a>
-          </nav>
-          <span>Tomáš Vaněk · KasparDocs</span>
+      <section class="fixes" aria-labelledby="fixes-title">
+        <h2 id="fixes-title">What Kaspar fixes</h2>
+        <p>Every script, grouped by what it changes. Each one links to its code and the registry keys it touches.</p>
+        <div class="fix-group">
+          <h3>Privacy and ads</h3>
+          <ul class="fix-grid">
+            <li><a href="scripts.html#disableadvertisementid"><span class="name">DisableAdvertisementID.py<span class="risk risk-safe">safe</span></span><span class="desc">Stops Windows from using your ad ID and cuts telemetry</span></a></li>
+            <li><a href="scripts.html#startads"><span class="name">StartAds.py<span class="risk risk-safe">safe</span></span><span class="desc">Removes sponsored app suggestions in Start</span></a></li>
+            <li><a href="scripts.html#disabledynamicsearch"><span class="name">DisableDynamicSearch.py<span class="risk risk-safe">safe</span></span><span class="desc">Removes news and highlights from Search</span></a></li>
+            <li><a href="scripts.html#localsearch"><span class="name">LocalSearch.py<span class="risk risk-safe">safe</span></span><span class="desc">Keeps Bing results out of Windows Search</span></a></li>
+          </ul>
         </div>
-      </footer>
-    </div>
+        <div class="fix-group">
+          <h3>Interface and shell</h3>
+          <ul class="fix-grid">
+            <li><a href="scripts.html#rmenu"><span class="name">ClassicRClickMenu.py<span class="risk risk-safe">safe</span></span><span class="desc">Restores the full Windows 10 context menu</span></a></li>
+            <li><a href="scripts.html#endtask"><span class="name">EndTask.py<span class="risk risk-safe">safe</span></span><span class="desc">Adds End Task to the taskbar right-click menu</span></a></li>
+            <li><a href="scripts.html#dropfileremove"><span class="name">DropFileRemove.py<span class="risk risk-safe">safe</span></span><span class="desc">Disables the drag-and-drop sharing pop-up</span></a></li>
+            <li><a href="scripts.html#askcopilotdisable"><span class="name">AskCopilotDisable.py<span class="risk risk-safe">safe</span></span><span class="desc">Removes Ask Copilot from the context menu</span></a></li>
+            <li><a href="scripts.html#detailedshutdown"><span class="name">DetailedShutdown.py<span class="risk risk-safe">safe</span></span><span class="desc">Shows what Windows is doing while shutting down</span></a></li>
+            <li><a href="scripts.html#shutdownanddontupdate"><span class="name">ShutdownAndDontUpdate.py<span class="risk risk-moderate">moderate</span></span><span class="desc">Shut down without being forced to update</span></a></li>
+          </ul>
+        </div>
+        <div class="fix-group">
+          <h3>System and setup</h3>
+          <ul class="fix-grid">
+            <li><a href="scripts.html#restorepoint"><span class="name">RestorePoint.py<span class="risk risk-safe">safe</span></span><span class="desc">Creates a snapshot you can roll back to</span></a></li>
+            <li><a href="scripts.html#powerplan"><span class="name">PowerPlan.py<span class="risk risk-safe">safe</span></span><span class="desc">Unlocks hidden presets like Ultimate Performance</span></a></li>
+            <li><a href="scripts.html#devicesetupregion"><span class="name">DeviceSetupRegion.py<span class="risk risk-moderate">moderate</span></span><span class="desc">Unlocks features Windows blocks by region</span></a></li>
+            <li><a href="scripts.html#localaccount"><span class="name">LocalAccount.py<span class="risk risk-moderate">moderate</span></span><span class="desc">Creates a local user or administrator account</span></a></li>
+            <li><a href="scripts.html#kasparnro"><span class="name">LocalAccountDuringInstallation<span class="risk risk-advanced">advanced</span></span><span class="desc">Installs Windows without a Microsoft account</span></a></li>
+            <li><a href="scripts.html#micvolume"><span class="name">MicVolume.py<span class="risk risk-safe">safe</span></span><span class="desc">Forces the microphone back to 100% and unmuted</span></a></li>
+            <li><a href="scripts.html#godmode"><span class="name">ControlPanelGodMode.bat<span class="risk risk-safe">safe</span></span><span class="desc">Every Control Panel setting in one folder</span></a></li>
+            <li><a href="scripts.html#rexplorer"><span class="name">rexplorer.bat<span class="risk risk-safe">safe</span></span><span class="desc">Restarts Explorer so tweaks apply</span></a></li>
+          </ul>
+        </div>
+      </section>
+    </main>
   </div>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <nav aria-label="Footer">
+        <a href="scripts.html">Scripts</a>
+        <a href="demo.html">Demo</a>
+        <a href="about.html">About</a>
+        <a href="bug.html">Report a bug</a>
+        <a href="https://forms.gle/pxvZQtuw6dKZWEZv8">Suggestions</a>
+        <a href="https://github.com/tomandesMSH">GitHub</a>
+      </nav>
+      <span>Tomáš Vaněk · KasparDocs · MIT license</span>
+    </div>
+  </footer>
 </body>
 </html>

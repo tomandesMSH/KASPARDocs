@@ -3,15 +3,110 @@
   var header = document.querySelector('.site-header');
   var btn = header && header.querySelector('.menu-btn');
   if (!btn) return;
-  btn.addEventListener('click', function () {
-    var open = header.classList.toggle('open');
+  function setOpen(open) {
+    header.classList.toggle('open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+  }
+  btn.addEventListener('click', function () { setOpen(!header.classList.contains('open')); });
   header.querySelectorAll('.site-nav a').forEach(function (a) {
-    a.addEventListener('click', function () {
-      header.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
+    a.addEventListener('click', function () { setOpen(false); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && header.classList.contains('open')) { setOpen(false); btn.focus(); }
+  });
+})();
+
+// Copy button on every code block
+(function () {
+  if (!navigator.clipboard) return;
+  document.querySelectorAll('main pre').forEach(function (pre) {
+    var wrap = document.createElement('div');
+    wrap.className = 'code';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy code');
+    var timer = null;
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(pre.innerText.replace(/^\n+|\s+$/g, '')).then(function () {
+        btn.textContent = 'Copied';
+        btn.classList.add('done');
+        clearTimeout(timer);
+        timer = setTimeout(function () { btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1500);
+      });
     });
+    wrap.appendChild(btn);
+  });
+})();
+
+// Permalink next to each script heading
+(function () {
+  document.querySelectorAll('.docs-main section[id] > h2').forEach(function (h) {
+    var a = document.createElement('a');
+    a.className = 'anchor';
+    a.href = '#' + h.parentNode.id;
+    a.textContent = '#';
+    a.setAttribute('aria-label', 'Link to ' + h.textContent);
+    h.appendChild(a);
+  });
+})();
+
+// Filter for the script index (searches names and tags)
+(function () {
+  var list = document.querySelector('.docs-nav ol');
+  if (!list) return;
+  var input = document.createElement('input');
+  input.type = 'search';
+  input.className = 'nav-filter';
+  input.placeholder = 'Filter scripts  /';
+  input.setAttribute('aria-label', 'Filter scripts');
+  list.parentNode.insertBefore(input, list);
+  var empty = document.createElement('p');
+  empty.className = 'nav-empty';
+  empty.textContent = 'No script matches.';
+  empty.hidden = true;
+  list.parentNode.insertBefore(empty, list.nextSibling);
+
+  var items = [];
+  list.querySelectorAll('li').forEach(function (li) {
+    var a = li.querySelector('a');
+    var text = a.textContent;
+    var id = a.getAttribute('href').split('#')[1];
+    var section = id && document.getElementById(id);
+    if (section) section.querySelectorAll('.tag').forEach(function (t) { text += ' ' + t.textContent; });
+    items.push({ li: li, text: text.toLowerCase() });
+  });
+
+  input.addEventListener('input', function () {
+    var q = input.value.trim().toLowerCase();
+    var shown = 0;
+    items.forEach(function (it) {
+      var hit = !q || it.text.indexOf(q) !== -1;
+      it.li.hidden = !hit;
+      if (hit) shown++;
+    });
+    empty.hidden = shown > 0;
+  });
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { input.value = ''; input.dispatchEvent(new Event('input')); input.blur(); }
+    if (e.key === 'Enter') {
+      var first = items.filter(function (it) { return !it.li.hidden; })[0];
+      if (first) first.li.querySelector('a').click();
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    var t = e.target;
+    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+    if (!input.offsetParent) return; // hidden (home page on phones)
+    e.preventDefault();
+    var details = input.closest('details');
+    if (details) details.setAttribute('open', '');
+    input.focus();
   });
 })();
 
