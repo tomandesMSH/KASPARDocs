@@ -3,192 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About – KASPAR Documentation</title>
-  <link rel="icon" type="image/x-icon" href="files/kaspardocs.png">
+  <title>About – Kaspar documentation</title>
+  <link rel="icon" type="image/png" href="files/kaspardocs.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    body { padding-top: 60px; display: block; }
-
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 32px;
-    }
-
-    .about-hero {
-      max-width: 800px;
-      margin-bottom: 60px;
-      padding-top: 20px;
-    }
-    .about-hero img {
-      max-width: 260px;
-      margin-bottom: 24px;
-      display: block;
-    }
-    .about-hero p {
-      font-size: 20px;
-      color: #c0c6e8;
-      line-height: 1.7;
-      margin: 0;
-    }
-
-    section p {
-      line-height: 1.8;
-      color: #c8cce0;
-      font-size: 15px;
-    }
-
-    section p + p {
-      margin-top: 14px;
-    }
-
-    .stat-row {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-    .stat-box {
-      background: #151823;
-      border: 1px solid #222;
-      border-radius: 8px;
-      padding: 20px 28px;
-      text-align: center;
-      min-width: 120px;
-    }
-    .stat-box .num {
-      font-size: 32px;
-      font-weight: bold;
-      color: #9aa4ff;
-    }
-    .stat-box .label {
-      font-size: 12px;
-      color: #666;
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .script-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      max-width: 800px;
-    }
-    .script-list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 10px 0;
-      border-bottom: 1px solid #1a1d26;
-      font-size: 14px;
-      gap: 20px;
-    }
-    .script-list li:last-child { border-bottom: none; }
-    .script-list a {
-      color: #9aa4ff;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .script-list a:hover { text-decoration: underline; }
-    .script-list span {
-      color: #666;
-      font-size: 13px;
-      text-align: right;
-    }
-
-    .author-card {
-      background: #151823;
-      border: 1px solid #222;
-      border-radius: 10px;
-      padding: 28px 32px;
-      max-width: 500px;
-      margin-top: 20px;
-    }
-    .author-card h3 {
-      margin: 0 0 6px 0;
-      font-size: 18px;
-      color: #e6e6e6;
-    }
-    .author-card p {
-      margin: 0 0 16px 0;
-      font-size: 14px;
-      color: #888;
-    }
-    .author-card a {
-      color: #9aa4ff;
-      text-decoration: none;
-      font-size: 14px;
-      margin-right: 20px;
-    }
-    .author-card a:hover { text-decoration: underline; }
-
-    blockquote {
-      border-left: 3px solid #22275a;
-      margin: 20px 0;
-      padding: 12px 20px;
-      color: #888;
-      font-style: italic;
-      font-size: 14px;
-      background: #0f1115;
-      border-radius: 0 6px 6px 0;
-    }
-
-    @media (max-width: 768px) {
-      body { padding-top: 60px; }
-
-      main {
-        padding: 20px 16px;
-      }
-
-      .about-hero {
-        padding-top: 8px;
-        margin-bottom: 40px;
-      }
-      .about-hero img {
-        max-width: 180px;
-      }
-      .about-hero p {
-        font-size: 17px;
-      }
-
-      .script-list li {
-        flex-wrap: wrap;
-        gap: 4px;
-      }
-      .script-list span {
-        text-align: left;
-      }
-
-      .author-card {
-        padding: 20px;
-        max-width: 100%;
-        box-sizing: border-box;
-      }
-    }
-  </style>
 </head>
-
-    <header class="top-navbar">
-    <div class="nav-left">
-      <a href="index.html"><img src="files/kasparlogo.png" alt="Logo"></a>
+<body>
+  <header class="site-header">
+    <div class="inner">
+      <a class="brand" href="index.html"><img src="files/kaspar.png" alt="Kaspar"></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="scripts.html">Scripts</a>
+        <a href="demo.html">Demo</a>
+        <a href="about.html" aria-current="page">About</a>
+        <a href="bug.html">Report a bug</a>
+        <a href="https://github.com/tomandesMSH/KASPAR">GitHub</a>
+        <span class="spacer"></span>
+        <a class="btn btn-primary" href="https://github.com/tomandesMSH/KASPAR/releases">Download</a>
+      </nav>
+      <button class="menu-btn" aria-label="Menu" aria-expanded="false"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
-    <nav class="nav-right">
-      <a href="index.html">Home</a>
-      <a href="scripts.html">Scripts</a>
-      <a href="https://github.com/tomandesMSH">GitHub</a>
-      <a href="bug.html">Report a bug</a>
-      <a href="about.html">About</a>
-      <a href="https://forms.gle/pxvZQtuw6dKZWEZv8">Suggestions</a>
-      <a href="demo.html">Demo</a>
-    </nav>
   </header>
 
-  <main>
-
-    <div class="about-hero" id="about">
-      <img src="files/kaspar.png" alt="KASPAR">
-      <p>"Take Control."</p>
+  <main class="prose">
+    <div class="page-head" id="about">
+      <h1><span class="prompt">&lt;_</span> Take control</h1>
+      <p>Why Kaspar exists, how the scripts work and who maintains them.</p>
     </div>
 
     <section id="why">
@@ -202,7 +44,7 @@
       </p>
       <h3>Meet Kaspar</h3>
       <p>
-        KASPAR started as a personal collection: fixes written out of frustration, obscure registry tweaks
+        Kaspar started as a personal collection: fixes written out of frustration, obscure registry tweaks
         only a handful of people remember. Over time, that collection of tweaks I knew by heart grew into
         something worth sharing, so I turned them into scripts anyone can run.
         Every script here solves a real problem that Microsoft either won't fix or keeps reintroducing.
@@ -211,46 +53,61 @@
 
     <section id="how">
       <h2>How it works</h2>
-      <p> 
-        Most of what KASPAR does comes down to the Windows Registry it is a massive settings database that
+      <p>
+        Most of what Kaspar does comes down to the Windows Registry, a massive settings database that
         Windows reads constantly. The vast majority of tweaks applied here are settings that already exist
-        inside Windows. Microsoft just doesn't give you a button for them. KASPAR does.
+        inside Windows. Microsoft just doesn't give you a button for them. Kaspar does.
       </p>
       <p>
-        Scripts are written in <strong>Python</strong> using the <strong>WinReg</strong> library. They are then
+        Scripts are written in <strong>Python</strong> using the <code>winreg</code> library. They are then
         compiled into standalone <code>.exe</code> files, so you don't need Python (or any of the dependencies)
-        installed to run them.
-        Every script is tested thoroughly, and almost all of them support reverting their changes back, so nothing is permanent.
+        installed to run them. Every script is tested thoroughly, and almost all of them can revert their
+        changes, so nothing is permanent.
       </p>
-      <p style="font-size: 8px;">
-        Before running anything you should use
-        <a href="scripts.html#restorepoint">RestorePoint.py</a> to create a system snapshot first.
-      </p>
-    </section>
-
-    <section id="launcher">
-      <h2> KASPAR Launcher <code>[new]</code></h2>
-      <p>
-        Running individual scripts is fine, but annoying and unprofessional. 
-        KASPAR now comes with a GUI app that lets you pick and run scripts.<br> 
-        - built with Electron 
-      </p>
-    </section>
-    <section id="author">
-      <h2>Author</h2>
-      <p>Made and maintained by one person, out of genuine annoyance with Microsoft.</p>
-      <div class="author-card">
-        <h3>Tomáš Vaněk</h3>
-        <p>tomandesMSH</p>
-        <a href="https://github.com/tomandesMSH">GitHub</a>
-        <a href="bug.html">Report a bug</a>
+      <div class="note">
+        <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        <p>Before running anything, use <a href="scripts.html#restorepoint">RestorePoint.py</a> to create a system snapshot.</p>
       </div>
     </section>
 
-    <footer>
-      <a>Tomáš Vaněk – KasparDocs</a>
-    </footer>
+    <section id="launcher">
+      <h2>Kaspar Launcher</h2>
+      <p>
+        Running individual scripts works, but it gets tedious. Kaspar now comes with a launcher, a desktop
+        app built with Electron that lets you pick scripts and run or revert them in one go.
+        You can <a href="demo.html">try a demo of it</a> in your browser.
+      </p>
+    </section>
 
+    <section id="author">
+      <h2>Author</h2>
+      <p>Made and maintained by one person, out of genuine annoyance with Microsoft.</p>
+      <div class="author">
+        <div>
+          <div class="who">Tomáš Vaněk</div>
+          <div class="handle">tomandesMSH</div>
+        </div>
+        <div class="links">
+          <a class="btn btn-secondary" href="https://github.com/tomandesMSH">GitHub</a>
+          <a class="btn btn-secondary" href="bug.html">Report a bug</a>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <nav aria-label="Footer">
+        <a href="scripts.html">Scripts</a>
+        <a href="demo.html">Demo</a>
+        <a href="about.html">About</a>
+        <a href="bug.html">Report a bug</a>
+        <a href="https://forms.gle/pxvZQtuw6dKZWEZv8">Suggestions</a>
+        <a href="https://github.com/tomandesMSH">GitHub</a>
+      </nav>
+      <span>Tomáš Vaněk · KasparDocs · MIT license</span>
+    </div>
+  </footer>
+  <script src="site.js"></script>
 </body>
 </html>

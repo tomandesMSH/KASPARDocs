@@ -1,504 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta property="og:title" content="Try out Kaspar Demo now!">
-<meta property="og:description" content="Kaspar is a Windows Utility, used to disable Microsofts bloat and put power back into the users hands.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Kaspar demo">
+<meta property="og:description" content="Try the Kaspar launcher in your browser: pick the Windows tweaks you want, no changes are made to your system.">
 <meta property="og:image" content="https://github.com/tomandesMSH/KASPAR/raw/main/files/kasparlogo.png?raw=true">
-
-<title>KASPAR – Demo</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<title>Demo – Kaspar</title>
+<link rel="icon" type="image/png" href="files/kaspardocs.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-  :root {
-    --bg: #0d0d0f;
-    --surface: #141416;
-    --surface2: #1c1c20;
-    --border: #2a2a30;
-    --accent: #04A2CC;
-    --accent2: #ff4d6d;
-    --text: #e8e8f0;
-    --muted: #5a5a6a;
-    --mono: 'JetBrains Mono', monospace;
-    --sans: 'Inter', sans-serif;
+  body { display: flex; flex-direction: column; min-height: 100vh; }
+
+  .demo-banner {
+    padding: 8px 24px;
+    border-bottom: 1px solid var(--line);
+    background: var(--deep);
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .demo-banner button {
+    background: none; border: 0; padding: 0; margin-left: 8px;
+    font: inherit; color: var(--accent); cursor: pointer;
+  }
+  .demo-banner button:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* App window */
+  .app {
+    flex: 1;
+    display: flex;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    min-height: 0;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    min-height: 100vh;
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--line);
     display: flex;
     flex-direction: column;
-    overflow-x: hidden;
+    padding: 24px 12px;
   }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ── Demo banner ── */
-  .demo-banner {
-    background: rgba(4,162,204,0.08);
-    border-bottom: 1px solid rgba(4,162,204,0.25);
-    padding: 10px 20px;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    text-align: center;
-    letter-spacing: 0.05em;
-    z-index: 10;
-    position: relative;
-    flex-shrink: 0;
-  }
-  .demo-banner a {
-    color: var(--accent);
-    font-weight: 700;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-
-  /* ── Layout ── */
-  .app { display: flex; flex: 1; position: relative; z-index: 1; overflow: hidden; }
-
-  /* ── Sidebar ── */
-  .sidebar {
-    width: 220px; background: var(--surface);
-    border-right: 1px solid var(--border);
-    display: flex; flex-direction: column; flex-shrink: 0;
-  }
-  .logo { padding: 20px 24px 18px; border-bottom: 1px solid var(--border); }
-  .logo-text { font-family: var(--mono); font-size: 22px; font-weight: 700; letter-spacing: 0.2em; color: var(--text); }
-  .logo-text span { color: var(--accent); }
-  .logo-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-top: 8px; text-transform: uppercase; }
-
-  .nav { padding: 16px 12px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .sidebar .wordmark { font-family: var(--mono); font-size: 16px; color: var(--text); padding: 0 8px 24px; }
+  .sidebar .wordmark span { color: var(--accent); }
+  .nav { display: grid; gap: 2px; }
   .nav-item {
     display: flex; align-items: center; gap: 10px;
-    padding: 9px 12px; border-radius: 6px; font-size: 13px; font-weight: 600;
-    color: var(--muted); cursor: pointer; transition: all 0.15s;
-    border: 1px solid transparent; user-select: none; text-decoration: none;
+    height: 36px; padding: 0 10px; border-radius: 8px;
+    font-size: 14px; color: var(--text-2);
+    transition: color 150ms var(--ease), background-color 150ms var(--ease);
   }
-  .nav-item:hover { color: var(--text); background: var(--surface2); }
-  .nav-item.active { color: var(--accent); background: rgba(4,162,204,0.08); border-color: rgba(4,162,204,0.2); }
+  .nav-item .icon { color: var(--muted); }
+  .nav-item:hover { color: var(--text); background: var(--raised); text-decoration: none; }
+  .nav-item.active { color: var(--text); background: var(--raised); box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); }
+  .nav-item.active .icon { color: var(--accent); }
+  .sidebar-footer { margin-top: auto; padding: 16px 10px 0; font-size: 12px; color: var(--muted); }
 
-  .sidebar-footer { padding: 16px; border-top: 1px solid var(--border); }
-  .version { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+  .main { flex: 1; min-width: 0; padding: 32px 32px 48px; }
 
-  /* ── Main ── */
-  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .page-title { font-size: 28px; font-weight: 500; letter-spacing: -0.01em; }
+  .actions { display: flex; gap: 8px; align-items: center; }
 
-  .topbar {
-    padding: 20px 32px 0;
-    display: flex; align-items: flex-start; justify-content: space-between;
-    flex-shrink: 0;
+  .btn:disabled { background: var(--raised); color: var(--muted); border-color: var(--line); box-shadow: none; cursor: not-allowed; transform: none; }
+  .btn .count { font-family: var(--mono); font-size: 12px; font-variant-numeric: tabular-nums; opacity: 0.75; }
+  .btn-revert { background: transparent; color: var(--text); border-color: var(--line-strong); }
+  .btn-revert:hover { background: var(--raised); }
+
+  .controls { display: flex; align-items: center; gap: 8px; margin: 24px 0 8px; }
+  .ctrl-btn {
+    height: 28px; padding: 0 10px; border-radius: 6px;
+    background: transparent; border: 1px solid var(--line); color: var(--text-2);
+    font: 13px var(--sans); cursor: pointer;
+    transition: color 150ms var(--ease), border-color 150ms var(--ease);
   }
-  .page-title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
-  .page-title span { color: var(--accent); }
+  .ctrl-btn:hover { color: var(--text); border-color: var(--line-strong); }
+  .selection-count { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .selection-count span { color: var(--text); }
 
-  /* ── Buttons ── */
-  .run-btn {
-    display: flex; align-items: center; gap: 10px;
-    background: var(--accent); color: #000; border: none; border-radius: 8px;
-    padding: 12px 24px; font-family: var(--sans); font-size: 14px; font-weight: 800;
-    cursor: pointer; letter-spacing: 0.02em; transition: all 0.15s;
-    position: relative; overflow: hidden;
-  }
-  .run-btn::after { content: ''; position: absolute; inset: 0; background: white; opacity: 0; transition: opacity 0.15s; }
-  .run-btn:hover::after { opacity: 0.15; }
-  .run-btn:active { transform: scale(0.97); }
-  .run-btn:disabled { background: var(--surface2); color: var(--muted); cursor: not-allowed; }
-  .run-btn:disabled::after { display: none; }
-
-  .revert-btn {
-    display: flex; align-items: center; gap: 10px;
-    background: transparent; color: var(--accent2);
-    border: 1px solid var(--accent2); border-radius: 8px;
-    padding: 12px 24px; font-family: var(--sans); font-size: 14px; font-weight: 800;
-    cursor: pointer; transition: all 0.15s;
-  }
-  .revert-btn:hover { background: rgba(255,77,109,0.08); }
-  .revert-btn:disabled { background: var(--surface2); color: var(--muted); border-color: var(--border); cursor: not-allowed; }
-
-  .restore-btn {
-    display: flex; align-items: center; gap: 8px;
-    background: transparent; color: var(--text);
-    border: 1px solid var(--border); border-radius: 8px;
-    padding: 12px 20px; font-family: var(--sans); font-size: 14px; font-weight: 700;
-    cursor: pointer; transition: all 0.15s;
-  }
-  .restore-btn:hover { border-color: #ffc800; color: #ffc800; background: rgba(255,200,0,0.06); }
-  .badge { background: rgba(0,0,0,0.25); border-radius: 4px; padding: 2px 7px; font-size: 12px; font-weight: 700; }
-
-  /* ── Script grid ── */
-  .content {
-    flex: 1; overflow-y: auto; padding: 24px 32px 32px;
-    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-  }
-
-  .category-label {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 12px; margin-top: 28px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .category-label:first-child { margin-top: 4px; }
-  .category-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .category-label { font-size: 13px; color: var(--muted); margin: 32px 0 12px; }
 
   .script-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
 
   .script-card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 20px 20px 18px; cursor: pointer; transition: all 0.15s;
-    display: flex; align-items: flex-start; gap: 16px; position: relative; overflow: hidden;
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 16px; border-radius: 12px;
+    background: var(--card); border: 1px solid var(--line);
+    cursor: pointer; user-select: none;
+    transition: background-color 150ms var(--ease), border-color 150ms var(--ease);
   }
-  .script-card::before {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-    width: 3px; background: var(--border); transition: background 0.15s;
-  }
-  .script-card:hover { border-color: rgba(4,162,204,0.3); background: var(--surface2); }
-  .script-card.selected { border-color: rgba(4,162,204,0.4); background: rgba(4,162,204,0.05); }
-  .script-card.selected::before { background: var(--accent); }
+  .script-card:hover { background: var(--raised); }
+  .script-card.selected { border-color: rgba(4,162,204,0.45); background: var(--accent-soft); }
 
   .script-check {
-    width: 18px; height: 18px; border: 1.5px solid var(--border); border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; margin-top: 2px; transition: all 0.15s; background: var(--surface2);
+    width: 18px; height: 18px; margin-top: 1px; flex-shrink: 0;
+    border-radius: 4px; border: 1.5px solid var(--line-strong); background: var(--deep);
+    display: flex; align-items: center; justify-content: center; color: var(--accent-ink);
+    transition: background-color 120ms var(--ease), border-color 120ms var(--ease);
   }
+  .script-check .icon { width: 12px; height: 12px; stroke-width: 2.5; opacity: 0; transition: opacity 120ms var(--ease); }
   .script-card.selected .script-check { background: var(--accent); border-color: var(--accent); }
-  .check-icon { color: #000; font-size: 11px; font-weight: 700; opacity: 0; transition: opacity 0.1s; }
-  .script-card.selected .check-icon { opacity: 1; }
+  .script-card.selected .script-check .icon { opacity: 1; }
 
   .script-info { flex: 1; min-width: 0; }
-  .script-name { font-size: 15px; font-weight: 700; color: var(--text); white-space: normal; line-height: 1.3; margin-bottom: 6px; }
-  .script-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.6; }
+  .script-name { font-size: 15px; color: var(--text); line-height: 1.35; }
+  .script-desc { font-size: 13px; color: var(--muted); line-height: 1.5; margin-top: 2px; }
+  .about-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 12px; color: var(--text-2); }
+  .about-link .icon { width: 12px; height: 12px; }
+  .about-link:hover { color: var(--accent); }
 
-  .script-tag {
-    font-family: var(--mono); font-size: 9px; padding: 2px 6px;
-    border-radius: 3px; letter-spacing: 0.05em; flex-shrink: 0; margin-top: 2px;
-  }
-  .tag-safe     { background: rgba(0,229,160,0.12);  color: #00e5a0; }
-  .tag-moderate { background: rgba(255,200,0,0.12);  color: #ffc800; }
-  .tag-advanced { background: rgba(255,77,109,0.12); color: var(--accent2); }
+  .risk { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; color: var(--muted); flex-shrink: 0; }
+  .risk::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .risk-safe::before { background: var(--positive); }
+  .risk-moderate::before { background: var(--warning); }
+  .risk-advanced::before { background: var(--negative); }
 
-  .about-btn {
-    display: inline-flex; align-items: center; gap: 5px;
-    margin-top: 8px; background: transparent;
-    border: 1px solid var(--border); color: var(--muted);
-    border-radius: 4px; padding: 3px 9px;
-    font-family: var(--mono); font-size: 10px;
-    cursor: pointer; transition: all 0.15s; text-decoration: none;
-  }
-  .about-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(4,162,204,0.05); }
-
-  /* ── Controls bar ── */
-  .controls {
-    display: flex; align-items: center; gap: 12px;
-    padding: 0 32px; margin-bottom: 4px; flex-shrink: 0;
-  }
-  .ctrl-btn {
-    background: transparent; border: 1px solid var(--border); color: var(--muted);
-    border-radius: 5px; padding: 5px 12px; font-family: var(--sans);
-    font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s;
-  }
-  .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .selection-count { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-left: auto; }
-  .selection-count span { color: var(--accent); font-weight: 700; }
-
-  /* ── Download modal ── */
+  /* Download dialog */
   .dl-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.85); z-index: 100;
-    align-items: center; justify-content: center;
+    position: fixed; inset: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: center; padding: 16px;
+    background: rgba(5, 6, 8, 0.75);
+    opacity: 0; pointer-events: none;
+    transition: opacity 200ms var(--ease);
   }
-  .dl-overlay.active { display: flex; }
+  .dl-overlay.active { opacity: 1; pointer-events: auto; }
   .dl-modal {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 36px; width: 440px; max-width: 90vw;
-    text-align: center;
+    width: 420px; max-width: 100%;
+    padding: 32px; border-radius: 16px;
+    background: var(--card); border: 1px solid var(--line-strong);
+    transform: translateY(8px);
+    transition: transform 200ms var(--ease);
   }
-  .dl-modal .dl-icon { font-size: 40px; margin-bottom: 16px; }
-  .dl-modal h2 { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
-  .dl-modal h2 span { color: var(--accent); }
-  .dl-modal p {
-    font-family: var(--mono); font-size: 11px; color: var(--muted);
-    line-height: 1.7; margin-bottom: 24px;
-  }
-  .dl-download-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: var(--accent); color: #000; border: none; border-radius: 8px;
-    padding: 13px 28px; font-family: var(--sans); font-size: 14px; font-weight: 800;
-    cursor: pointer; text-decoration: none; transition: all 0.15s; margin-bottom: 12px;
-  }
-  .dl-download-btn:hover { opacity: 0.9; }
-  .dl-close-btn {
-    display: block; margin: 0 auto; background: transparent;
-    border: 1px solid var(--border); color: var(--muted); border-radius: 6px;
-    padding: 8px 20px; font-family: var(--sans); font-size: 13px;
-    cursor: pointer; transition: all 0.15s;
-  }
-  .dl-close-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .dl-overlay.active .dl-modal { transform: none; }
+  .dl-modal h2 { font-size: 20px; }
+  .dl-modal p { color: var(--text-2); font-size: 14px; margin: 8px 0 24px; }
+  .dl-modal .row { display: flex; gap: 8px; }
+  .dl-modal .row .btn { flex: 1; justify-content: center; }
 
-  .top-navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background-color: #151823;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  border-bottom: 1px solid #222;
-  z-index: 1000;
-}
+  .desktop-only-notice { display: none; }
 
-.top-navbar img {
-  max-height: 40px;
-}
-
-.nav-title {
-  color: #cfd3ff;
-  font-size: 18px;
-  margin-left: 10px;
-  font-weight: bold;
-}
-
-.nav-right a {
-  color: #9aa4ff;
-  text-decoration: none;
-  margin-left: 20px;
-  font-size: 14px;
-}
-
-.nav-right a:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  .top-navbar {
-    padding: 0 12px;
+  @media (max-width: 768px) {
+    .demo-banner, .app { display: none; }
+    .desktop-only-notice {
+      display: block;
+      max-width: 420px;
+      padding: 64px 16px;
+      flex: 1;
+    }
+    .desktop-only-notice h1 { font-size: 28px; }
+    .desktop-only-notice p { color: var(--text-2); margin: 12px 0 24px; }
+    .desktop-only-notice .row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .site-footer { margin-top: 0; }
   }
-
-  .nav-right {
-    display: flex;
-    max-width: 60vw;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .nav-right::-webkit-scrollbar { display: none; }
-  .nav-right a {
-    margin-left: 14px;
-    font-size: 13px;
-    white-space: nowrap;
-  }
-  .nav-right a:first-child { margin-left: 0; }
-}
-
-.desktop-only-notice {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .demo-banner,
-  .app {
-    display: none;
-  }
-
-  .desktop-only-notice {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 14px;
-    padding: 100px 28px;
-    min-height: 60vh;
-  }
-  .desktop-only-notice .icon {
-    font-size: 40px;
-  }
-  .desktop-only-notice h2 {
-    font-size: 20px;
-    font-weight: 800;
-  }
-  .desktop-only-notice h2 span {
-    color: var(--accent);
-  }
-  .desktop-only-notice p {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 320px;
-  }
-  .desktop-only-notice a {
-    margin-top: 10px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--accent);
-    color: #000;
-    border-radius: 8px;
-    padding: 12px 22px;
-    font-family: var(--sans);
-    font-size: 13px;
-    font-weight: 800;
-    text-decoration: none;
-  }
-}
-
 </style>
 </head>
 <body>
-
-    <header class="top-navbar">
-    <div class="nav-left">
-      <a href="index.html"><img src="files/kasparlogo.png" alt="Logo"></a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="brand" href="index.html"><img src="files/kaspar.png" alt="Kaspar"></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="scripts.html">Scripts</a>
+        <a href="demo.html" aria-current="page">Demo</a>
+        <a href="about.html">About</a>
+        <a href="bug.html">Report a bug</a>
+        <a href="https://github.com/tomandesMSH/KASPAR">GitHub</a>
+        <span class="spacer"></span>
+        <a class="btn btn-primary" href="https://github.com/tomandesMSH/KASPAR/releases">Download</a>
+      </nav>
+      <button class="menu-btn" aria-label="Menu" aria-expanded="false"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
-    <nav class="nav-right">
-      <a href="index.html">Home</a>
-      <a href="scripts.html">Scripts</a>
-      <a href="https://github.com/tomandesMSH">GitHub</a>
-      <a href="bug.html">Report a bug</a>
-      <a href="about.html">About</a>
-      <a href="https://forms.gle/pxvZQtuw6dKZWEZv8">Suggestions</a>
-      <a href="demo.html">Demo</a>
-    </nav>
   </header>
 
-<br><br><br>
-  
-<div class="demo-banner">
-  KASPAR [DEMO] — no changes are made to your system.
-  <a onclick="showDownload()">Download the real KASPAR →</a>
-</div>
+  <div class="demo-banner">
+    This is a demo of the Kaspar launcher. Nothing here changes your system.
+    <button type="button" onclick="showDownload()">Download the real app</button>
+  </div>
 
-<div class="desktop-only-notice">
-  <div class="icon">🖥️</div>
-  <h2>Desktop <span>Only</span></h2>
-  <p>
-    The KASPAR demo is only available on PC.
-    Open this page on a desktop browser to try it out.
-  </p>
-  <a href="index.html">← Back to KASPARDocs</a>
-</div>
-
-<div class="app">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">
-      <div class="logo-text">KASPAR</div>
-        <a class="nav-item" href="https://tomandes.eu/KASPARDocs/"><- Back to KASPARDocs</a>
+  <div class="desktop-only-notice">
+    <h1>The demo needs a desktop</h1>
+    <p>The Kaspar launcher is a Windows app, so the demo is laid out for a PC screen. Open this page on a computer to try it.</p>
+    <div class="row">
+      <a class="btn btn-primary" href="scripts.html">Read the docs</a>
+      <a class="btn btn-secondary" href="index.html">Home</a>
     </div>
-    <nav class="nav">
-      <div class="nav-item active">Scripts</div>
-      <a class="nav-item" href="https://tomandes.eu/KASPARDocs/about.html">About KASPAR</a>
-      <a class="nav-item" href="https://tomandes.eu/KASPARDocs/">Documentation</a>
-      <a class="nav-item" href="https://github.com/tomandesMSH/KASPAR" target="_bla nk">GitHub</a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="version">Tomáš Vaněk – KASPAR Demo</div>
-    </div>
-  </aside>
+  </div>
 
-  <!-- Main -->
-  <div class="main">
-    <div class="page active" id="page-scripts">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="wordmark"><span>&lt;_</span>Kaspar</div>
+      <nav class="nav">
+        <span class="nav-item active">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg>
+          Scripts
+        </span>
+        <a class="nav-item" href="scripts.html">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Documentation
+        </a>
+        <a class="nav-item" href="about.html">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          About Kaspar
+        </a>
+        <a class="nav-item" href="https://github.com/tomandesMSH/KASPAR" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          GitHub
+        </a>
+      </nav>
+      <div class="sidebar-footer">Kaspar demo · Tomáš Vaněk</div>
+    </aside>
+
+    <main class="main">
       <div class="topbar">
-        <div class="page-title">Select <span>Tweaks</span></div>
-        <div style="display:flex; gap:10px; align-items:center;">
-          <button class="restore-btn" onclick="showDownload()">🛡 Restore Point</button>
-          <button class="revert-btn" id="revertBtn" disabled onclick="showDownload()">
-            ↩ Revert <span class="badge" id="revertCount">0</span>
+        <h1 class="page-title">Select tweaks</h1>
+        <div class="actions">
+          <button class="btn btn-secondary" onclick="showDownload()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            Restore point
           </button>
-          <button class="run-btn" id="runBtn" disabled onclick="showDownload()">
-            ▶ Run Tweaks <span class="badge" id="runCount">0</span>
+          <button class="btn btn-revert" id="revertBtn" disabled onclick="showDownload()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            Revert <span class="count" id="revertCount">0</span>
+          </button>
+          <button class="btn btn-primary" id="runBtn" disabled onclick="showDownload()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="m6 3 14 9-14 9z"/></svg>
+            Run tweaks <span class="count" id="runCount">0</span>
           </button>
         </div>
       </div>
-      <div class="controls" style="margin-top:16px;">
-        <button class="ctrl-btn" onclick="selectAll()">Select All</button>
+      <div class="controls">
+        <button class="ctrl-btn" onclick="selectAll()">Select all</button>
         <button class="ctrl-btn" onclick="selectNone()">Clear</button>
         <div class="selection-count"><span id="countDisplay">0</span> selected</div>
       </div>
-      <div class="content" id="scriptList"></div>
+      <div id="scriptList"></div>
+    </main>
+  </div>
+
+  <div class="dl-overlay" id="dlOverlay" onclick="if (event.target === this) closeDownload()">
+    <div class="dl-modal" role="dialog" aria-modal="true" aria-labelledby="dlTitle">
+      <h2 id="dlTitle">Get Kaspar</h2>
+      <p>This is a demo. To apply tweaks to your Windows system, download the Kaspar app.</p>
+      <div class="row">
+        <a class="btn btn-primary" href="https://github.com/tomandesMSH/KASPAR/releases" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+          Download
+        </a>
+        <button class="btn btn-secondary" onclick="closeDownload()">Not now</button>
+      </div>
     </div>
   </div>
-</div>
-
-
-
-<!-- Download modal -->
-<div class="dl-overlay" id="dlOverlay">
-  <div class="dl-modal">
-    <h2>Get <span>KASPAR</span></h2>
-    <p>
-      This is a demo. To actually apply tweaks<br>
-      to your Windows system, download the KASPAR app.
-    </p>
-    <a class="dl-download-btn" href="https://github.com/tomandesMSH/KASPAR/releases" target="_blank">
-      ↓ Download KASPAR
-    </a>
-    <button class="dl-close-btn" onclick="closeDownload()">Maybe later</button>
-  </div>
-</div>
 
 <script>
 const categories = [
   {
-    name: "Privacy & Ads",
+    name: "Privacy and ads",
     scripts: [
-      { id: "disableadid",    name: "Disable Advertisement ID",  desc: "Stops Windows from using your ad targeting ID",      tag: "safe",     docs: "disableadvertisementid" },
-      { id: "startads",       name: "Remove Start Menu Ads",     desc: "Remove sponsored app suggestions in Start menu",     tag: "safe",     docs: "startads" },
-      { id: "disabledynsrch", name: "Disable Dynamic Search",    desc: "Disables News/Articles in Start and Search",         tag: "safe",     docs: "disabledynamicsearch" },
-      { id: "localaccount",   name: "Local Account Setup",       desc: "Helps you create a local account",                  tag: "moderate", docs: "localaccount" },
+      { id: "disableadid",    name: "Disable Advertisement ID",  desc: "Stops Windows from using your ad targeting ID",   tag: "safe",     docs: "disableadvertisementid" },
+      { id: "startads",       name: "Remove Start menu ads",     desc: "Removes sponsored app suggestions in Start",     tag: "safe",     docs: "startads" },
+      { id: "disabledynsrch", name: "Disable Dynamic Search",    desc: "Removes news and articles from Start and Search", tag: "safe",     docs: "disabledynamicsearch" },
+      { id: "localaccount",   name: "Local account setup",       desc: "Helps you create a local account",               tag: "moderate", docs: "localaccount" },
     ]
   },
   {
-    name: "UI & Shell Tweaks",
+    name: "Interface and shell",
     scripts: [
-      { id: "classicroclick", name: "Classic Right-Click Menu",  desc: "Restores the full context menu (Win10)",             tag: "safe",     docs: "classicrclickmenu" },
-      { id: "detailedsd",     name: "Detailed Shutdown",         desc: "Shows you what's happening on shutdown",            tag: "safe",     docs: "detailedshutdown" },
-      { id: "endtask",        name: "Enable End Task",           desc: "Adds End Task option to taskbar",                   tag: "safe",     docs: "endtask" },
-      { id: "dropfileremove", name: "Remove Drop File Prompt",   desc: "Disable drag-and-drop sharing window",              tag: "safe",     docs: "dropfileremove" },
+      { id: "classicroclick", name: "Classic right-click menu",  desc: "Restores the full Windows 10 context menu",       tag: "safe",     docs: "rmenu" },
+      { id: "detailedsd",     name: "Detailed shutdown",         desc: "Shows what Windows is doing while shutting down", tag: "safe",     docs: "detailedshutdown" },
+      { id: "endtask",        name: "Enable End Task",           desc: "Adds End Task to the taskbar right-click menu",   tag: "safe",     docs: "endtask" },
+      { id: "dropfileremove", name: "Remove drop file prompt",   desc: "Disables the drag-and-drop sharing window",       tag: "safe",     docs: "dropfileremove" },
+      { id: "askcopilot",     name: "Remove Ask Copilot",        desc: "Removes Ask Copilot from the context menu",       tag: "safe",     docs: "askcopilotdisable" },
     ]
   },
   {
-    name: "System & Performance",
+    name: "System and performance",
     scripts: [
-      { id: "powerplan",        name: "Power Plan Manager",        desc: "Switch to high-performance or battery saver anytime", tag: "safe",     docs: "powerplan" },
-      { id: "devsetupregion",   name: "Device Setup Region",       desc: "Bypass region-locked Windows features",               tag: "moderate", docs: "devicesetupregion" },
-      { id: "localsearch",      name: "Local Search Only",         desc: "Restrict Windows Search to local files only",         tag: "safe",     docs: "localsearch" },
-      { id: "shutdownnoupdate", name: "Shutdown & Don't Update",   desc: "Control whether Windows forces updates on shutdown",  tag: "moderate", docs: "shutdownanddontupdate" },
-      { id: "askcopilot",       name: "Remove Ask Copilot",        desc: 'Removes the "Ask Copilot" option from the context menu.', tag: "safe", docs: "disableadvertisementid" },
+      { id: "powerplan",        name: "Power plan manager",      desc: "Switch to high performance or battery saver",     tag: "safe",     docs: "powerplan" },
+      { id: "devsetupregion",   name: "Device setup region",     desc: "Unlocks features Windows blocks by region",       tag: "moderate", docs: "devicesetupregion" },
+      { id: "localsearch",      name: "Local search only",       desc: "Keeps Bing results out of Windows Search",        tag: "safe",     docs: "localsearch" },
+      { id: "shutdownnoupdate", name: "Shut down without updating", desc: "Choose whether shutdown installs updates",     tag: "moderate", docs: "shutdownanddontupdate" },
     ]
   }
 ];
 
+const CHECK = '<svg class="icon" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>';
+const ARROW = '<svg class="icon" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
 const selected = new Set();
-
-function tagClass(t) {
-  return t === 'safe' ? 'tag-safe' : t === 'moderate' ? 'tag-moderate' : 'tag-advanced';
-}
 
 function render() {
   const container = document.getElementById('scriptList');
   container.innerHTML = '';
   categories.forEach(cat => {
-    const label = document.createElement('div');
+    const label = document.createElement('h2');
     label.className = 'category-label';
     label.textContent = cat.name;
     container.appendChild(label);
@@ -507,17 +305,21 @@ function render() {
     cat.scripts.forEach(s => {
       const card = document.createElement('div');
       card.className = 'script-card' + (selected.has(s.id) ? ' selected' : '');
+      card.dataset.id = s.id;
+      card.setAttribute('role', 'checkbox');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-checked', selected.has(s.id) ? 'true' : 'false');
       card.innerHTML = `
-        <div class="script-check"><span class="check-icon">✓</span></div>
+        <div class="script-check">${CHECK}</div>
         <div class="script-info">
           <div class="script-name">${s.name}</div>
           <div class="script-desc">${s.desc}</div>
-          <a class="about-btn" href="https://tomandes.eu/KASPARDocs/scripts.html#${s.docs}"
-             target="_blank" onclick="event.stopPropagation()">↗ About</a>
+          <a class="about-link" href="scripts.html#${s.docs}" target="_blank" onclick="event.stopPropagation()">How it works ${ARROW}</a>
         </div>
-        <span class="script-tag ${tagClass(s.tag)}">${s.tag}</span>
+        <span class="risk risk-${s.tag}">${s.tag}</span>
       `;
       card.onclick = () => toggle(s.id);
+      card.onkeydown = e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(s.id); } };
       grid.appendChild(card);
     });
     container.appendChild(grid);
@@ -525,7 +327,12 @@ function render() {
   updateCount();
 }
 
-function toggle(id) { selected.has(id) ? selected.delete(id) : selected.add(id); render(); }
+function toggle(id) {
+  selected.has(id) ? selected.delete(id) : selected.add(id);
+  const hadFocus = document.activeElement && document.activeElement.dataset.id === id;
+  render();
+  if (hadFocus) document.querySelector(`.script-card[data-id="${id}"]`).focus();
+}
 function selectAll()  { categories.forEach(c => c.scripts.forEach(s => selected.add(s.id))); render(); }
 function selectNone() { selected.clear(); render(); }
 
@@ -538,14 +345,12 @@ function updateCount() {
   document.getElementById('revertBtn').disabled = n === 0;
 }
 
-function showDownload() {
-  document.getElementById('dlOverlay').classList.add('active');
-}
-function closeDownload() {
-  document.getElementById('dlOverlay').classList.remove('active');
-}
+function showDownload() { document.getElementById('dlOverlay').classList.add('active'); }
+function closeDownload() { document.getElementById('dlOverlay').classList.remove('active'); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDownload(); });
 
 render();
 </script>
+<script src="site.js"></script>
 </body>
 </html>

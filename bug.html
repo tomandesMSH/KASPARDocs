@@ -3,43 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bug Reporting</title>
-  <link rel="icon" type="image/x-icon" href="files/kaspardocs.png">
+  <title>Report a bug – Kaspar documentation</title>
+  <link rel="icon" type="image/png" href="files/kaspardocs.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-        <header class="top-navbar">
-    <div class="nav-left">
-      <a href="index.html"><img src="files/kasparlogo.png" alt="Logo"></a>
+  <header class="site-header">
+    <div class="inner">
+      <a class="brand" href="index.html"><img src="files/kaspar.png" alt="Kaspar"></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="scripts.html">Scripts</a>
+        <a href="demo.html">Demo</a>
+        <a href="about.html">About</a>
+        <a href="bug.html" aria-current="page">Report a bug</a>
+        <a href="https://github.com/tomandesMSH/KASPAR">GitHub</a>
+        <span class="spacer"></span>
+        <a class="btn btn-primary" href="https://github.com/tomandesMSH/KASPAR/releases">Download</a>
+      </nav>
+      <button class="menu-btn" aria-label="Menu" aria-expanded="false"><svg class="icon" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
-    <nav class="nav-right">
-      <a href="index.html">Home</a>
-      <a href="scripts.html">Scripts</a>
-      <a href="https://github.com/tomandesMSH">GitHub</a>
-      <a href="bug.html">Report a bug</a>
-      <a href="about.html">About</a>
-      <a href="https://forms.gle/pxvZQtuw6dKZWEZv8">Suggestions</a>
-    </nav>
   </header>
-  <main>
-    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80vh; text-align: center;">
-      <img src="files/kasparlogo.png" alt="Kaspar Logo" style="margin-bottom: 20px;">
-      <p class="introtxt" style="font-size:35px; margin-bottom: 10px;">Report a Bug</p>
-      <p class="introtxt" style="max-width: 500px; margin-bottom: 30px;">
-        Let me know where you found the bug so i can fix it.
-      </p>
-      <div class="buttons-container" style="display: flex; gap: 20px;">
-        <a href="https://github.com/tomandesMSH/KASPARDocs/issues"><button class="doc-btn">
-          Bug in this Website
-        </button></a>
-        <a href="https://github.com/tomandesMSH/KASPAR/issues"><button class="doc-btn">
-          Bug in my Scripts
-        </button></a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDoQIjxXp5lpwreJ5loZWz0dwhOXq7nxl15PiKgIrlE75owg/viewform?usp=header"><button class="doc-btn">
-          Bug in Windows
-        </button></a>
-      </div>
+
+  <main class="prose">
+    <div class="page-head">
+      <h1>Report a bug</h1>
+      <p>Tell me where you found it so I can fix it.</p>
     </div>
+
+    <ul class="choices">
+      <li>
+        <a href="https://github.com/tomandesMSH/KASPAR/issues">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="m10 13-2 2 2 2"/><path d="m14 17 2-2-2-2"/></svg>
+          <span><span class="title">In a script</span><span class="sub">A tweak failed, did the wrong thing or would not revert</span></span>
+          <span class="where">GitHub issues</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/tomandesMSH/KASPARDocs/issues">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          <span><span class="title">On this website</span><span class="sub">A broken link, a typo or a page that looks wrong</span></span>
+          <span class="where">GitHub issues</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdDoQIjxXp5lpwreJ5loZWz0dwhOXq7nxl15PiKgIrlE75owg/viewform?usp=header">
+          <svg class="icon" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+          <span><span class="title">In Windows</span><span class="sub">Something Windows does that a Kaspar script could fix</span></span>
+          <span class="where">Google Form</span>
+        </a>
+      </li>
+    </ul>
   </main>
+
+  <footer class="site-footer">
+    <div class="inner">
+      <nav aria-label="Footer">
+        <a href="scripts.html">Scripts</a>
+        <a href="demo.html">Demo</a>
+        <a href="about.html">About</a>
+        <a href="bug.html">Report a bug</a>
+        <a href="https://forms.gle/pxvZQtuw6dKZWEZv8">Suggestions</a>
+        <a href="https://github.com/tomandesMSH">GitHub</a>
+      </nav>
+      <span>Tomáš Vaněk · KasparDocs · MIT license</span>
+    </div>
+  </footer>
+  <script src="site.js"></script>
 </body>
 </html>
